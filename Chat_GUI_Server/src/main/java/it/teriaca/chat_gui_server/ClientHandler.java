@@ -18,11 +18,14 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 public class ClientHandler extends Thread {
     private Socket s;
+    private String username;
+    private String time;
 
     public Socket getS() {
         return s;
@@ -38,18 +41,28 @@ public class ClientHandler extends Thread {
     private List<ClientHandler> clients;
 
     // contatore = contatore+1;
-    public ClientHandler(Socket s, int c, List<ClientHandler> x) {
+    public ClientHandler(Socket s, int c, List<ClientHandler> x, String name, String time) {
         this.clients = x;
         this.s = s;
         this.comando = "";
         this.output = "";
         this.c = c;
+        this.time = time;
+        this.username = name;
         try {
             pr = new PrintWriter(s.getOutputStream(), true);
             br = new BufferedReader(new InputStreamReader(s.getInputStream()));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getTime() {
+        return time;
     }
 
     public void run() {

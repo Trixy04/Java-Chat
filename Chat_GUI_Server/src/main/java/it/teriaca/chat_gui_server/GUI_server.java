@@ -27,6 +27,7 @@ public class GUI_server extends javax.swing.JFrame {
     private Server_chat server;
     private InetAddress ip;
     private String ipAddress;
+    private Users_Table table;
 
     /**
      * Creates new form GUI_server
@@ -166,6 +167,11 @@ public class GUI_server extends javax.swing.JFrame {
         jLabel8.setText("Users connect:");
 
         jButton3.setText("SHOW USERS");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -291,6 +297,12 @@ public class GUI_server extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+        this.table = new Users_Table(this.server.getClients());
+        this.table.setVisible(true);
+    }//GEN-LAST:event_jButton3MouseClicked
 
     /**
      * @param args the command line arguments

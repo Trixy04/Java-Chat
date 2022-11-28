@@ -7,7 +7,10 @@ package it.teriaca.chat_gui_server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -15,47 +18,58 @@ import java.util.List;
  * @author teria
  */
 public class Server_chat {
-    
+
     private static int contatore = 0;
-    private  int portNumber = 3000;
+    private int portNumber = 3000;
     private String nameServer = "Server_Chat_Teriaca-Rocchini";
-    ServerSocket ss; 
+    private String name;
+    ServerSocket ss;
+    ArrayList<ClientHandler> clients;
 
     public Server_chat() throws IOException {
         this.ss = new ServerSocket(portNumber);
     }
-    
-    public void startServer(boolean running) throws IOException{
-        
-        List<ClientHandler> clients = new ArrayList<>();
 
+    public void startServer(boolean running) throws IOException {
 
-    System.out.println("Server in ascolto sulla porta 3000");
-    //boolean running = true;
-    while (running) {
-      Socket s = ss.accept();
-      this.contatore++;
-      System.out.println("Client connesso");
-      ClientHandler client = new ClientHandler(s, contatore, clients);
-      clients.add(client);
-      client.start();
+        this.clients = new ArrayList<ClientHandler>();
+
+        System.out.println("Server in ascolto sulla porta 3000");
+        //boolean running = true;
+        while (running) {
+            Socket s = ss.accept();
+            this.contatore++;
+            System.out.println("Client connesso");
+            DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM, yyyy 'alle' HH:mm:ss");
+            
+            String date = dateFormat.format(Calendar.getInstance().getTime());
+                    
+            ClientHandler client = new ClientHandler(s, contatore, clients, name, date);
+            clients.add(client);
+            client.start();
+        }
     }
+
+    public ArrayList<ClientHandler> getClients() {
+        return clients;
     }
-    
-    public void stopServer() throws IOException{
+
+    public void stopServer() throws IOException {
         System.out.println("Server chiuso");
         ss.close();
         System.exit(0);
     }
-    
+
     public int getPortNumber() {
         return portNumber;
     }
-    public String getNameServer(){
+
+    public String getNameServer() {
         return nameServer;
     }
-    public int getContatore(){
+
+    public int getContatore() {
         return contatore;
-     }
-    
+    }
+
 }
