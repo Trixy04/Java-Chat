@@ -4,8 +4,11 @@
  */
 package it.teriaca.chat_gui_server;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -29,14 +32,17 @@ public class Users_Table extends javax.swing.JFrame {
         this.user = array;
         this.renderer = new DefaultTableCellRenderer();
         renderer.setHorizontalAlignment(0);
-      for (int i=0; i<jTable1.getColumnCount();i++){
-         jTable1.setDefaultRenderer(jTable1.getColumnClass(i),renderer);
-      }
-        DefaultTableModel table = (DefaultTableModel) jTable1.getModel();
         
-        for (int i = 0; i < this.user.size(); i++) {
-            table.insertRow(table.getRowCount(),new Object[]{String.valueOf(i),user.get(i).getUsername(), user.get(i).getIpA(), user.get(i).getTime()});
+        
+        for (int i = 0; i < jTable1.getColumnCount(); i++) {
+            jTable1.setDefaultRenderer(jTable1.getColumnClass(i), renderer);
         }
+        DefaultTableModel table = (DefaultTableModel) jTable1.getModel();
+
+        for (int i = 0; i < this.user.size(); i++) {
+            table.insertRow(table.getRowCount(), new Object[]{String.valueOf(i), user.get(i).getUsername(), user.get(i).getIpA(), user.get(i).getTime()});
+        }
+        
     }
 
     private Users_Table() {
@@ -57,6 +63,7 @@ public class Users_Table extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(153, 204, 255));
 
@@ -119,18 +126,26 @@ public class Users_Table extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("DISCONNETTI UTENTE");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(343, 343, 343))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -140,7 +155,9 @@ public class Users_Table extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addGap(0, 19, Short.MAX_VALUE))
         );
 
@@ -151,20 +168,36 @@ public class Users_Table extends javax.swing.JFrame {
     @SuppressWarnings("empty-statement")
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+
         DefaultTableModel table = (DefaultTableModel) jTable1.getModel();
         
-        for (int i = 0; i < table.getRowCount(); i++) {
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
             table.removeRow(i);
         }
-        
+
         for (int i = 0; i < this.user.size(); i++) {
-            table.insertRow(table.getRowCount(),new Object[]{String.valueOf(i),user.get(i).getUsername(), user.get(i).getIpA(), user.get(i).getTime()});
+            table.insertRow(i, new Object[]{String.valueOf(i), user.get(i).getUsername(), user.get(i).getIpA(), user.get(i).getTime()});
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel table = (DefaultTableModel) jTable1.getModel();
+
+        int rows = jTable1.getSelectedRow();
+        try {
+            user.get(rows).getS().close();
+        } catch (IOException ex) {
+            //Logger.getLogger(Users_Table.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        table.removeRow(rows);
+
+
+    }//GEN-LAST:event_jButton2MouseClicked
+
     /**
-         * @param args the command line arguments
-         */
+     * @param args the command line arguments
+     */
     public void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -188,7 +221,7 @@ public class Users_Table extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Users_Table.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -199,6 +232,7 @@ public class Users_Table extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
