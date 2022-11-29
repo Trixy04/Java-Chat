@@ -26,6 +26,7 @@ public class ClientHandler extends Thread {
     private Socket s;
     private String username;
     private String time;
+    private String ipA;
 
     public Socket getS() {
         return s;
@@ -41,13 +42,14 @@ public class ClientHandler extends Thread {
     private List<ClientHandler> clients;
 
     // contatore = contatore+1;
-    public ClientHandler(Socket s, int c, List<ClientHandler> x, String name, String time) {
+    public ClientHandler(Socket s, int c, List<ClientHandler> x, String name, String time, String ip) {
         this.clients = x;
         this.s = s;
         this.comando = "";
         this.output = "";
         this.c = c;
         this.time = time;
+        this.ipA = ip;
         this.username = name;
         try {
             pr = new PrintWriter(s.getOutputStream(), true);
@@ -55,6 +57,10 @@ public class ClientHandler extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getIpA() {
+        return ipA;
     }
 
     public String getUsername() {
@@ -73,6 +79,7 @@ public class ClientHandler extends Thread {
             pr.println("Ciao, come ti chiami?");
             String name = br.readLine().toUpperCase(); 
             System.out.println(name);
+            this.username = name;
             pr.println("Server: " + name + " sei l'utente n. " + c );
             
             for(;;){

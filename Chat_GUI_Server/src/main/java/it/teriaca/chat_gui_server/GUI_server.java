@@ -28,6 +28,7 @@ public class GUI_server extends javax.swing.JFrame {
     private InetAddress ip;
     private String ipAddress;
     private Users_Table table;
+    private ClientHandler client;
 
     /**
      * Creates new form GUI_server

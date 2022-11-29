@@ -5,6 +5,7 @@
 package it.teriaca.chat_gui_server;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.DateFormat;
@@ -12,7 +13,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 /**
  *
  * @author teria
@@ -23,6 +23,7 @@ public class Server_chat {
     private int portNumber = 3000;
     private String nameServer = "Server_Chat_Teriaca-Rocchini";
     private String name;
+    private String ipAddress;
     ServerSocket ss;
     ArrayList<ClientHandler> clients;
 
@@ -39,15 +40,23 @@ public class Server_chat {
         while (running) {
             Socket s = ss.accept();
             this.contatore++;
+            
+            InetSocketAddress socketAddress = (InetSocketAddress) s.getRemoteSocketAddress();
+            this.ipAddress = socketAddress.getAddress().getHostAddress();
+            
             System.out.println("Client connesso");
             DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM, yyyy 'alle' HH:mm:ss");
-            
+
             String date = dateFormat.format(Calendar.getInstance().getTime());
-                    
-            ClientHandler client = new ClientHandler(s, contatore, clients, name, date);
+
+            ClientHandler client = new ClientHandler(s, contatore, clients, name, date, ipAddress);
             clients.add(client);
             client.start();
         }
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
     }
 
     public ArrayList<ClientHandler> getClients() {

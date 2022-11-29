@@ -6,6 +6,8 @@ package it.teriaca.chat_gui_server;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -15,7 +17,8 @@ import javax.swing.table.DefaultTableModel;
 public class Users_Table extends javax.swing.JFrame {
 
     private static ArrayList<ClientHandler> user;
-    private String[] row;
+    private String[][] row;
+    private DefaultTableCellRenderer renderer;
 
     /**
      * Creates new form Users_Table
@@ -24,6 +27,16 @@ public class Users_Table extends javax.swing.JFrame {
         initComponents();
         this.setTitle("Users Table");
         this.user = array;
+        this.renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(0);
+      for (int i=0; i<jTable1.getColumnCount();i++){
+         jTable1.setDefaultRenderer(jTable1.getColumnClass(i),renderer);
+      }
+        DefaultTableModel table = (DefaultTableModel) jTable1.getModel();
+        
+        for (int i = 0; i < this.user.size(); i++) {
+            table.insertRow(table.getRowCount(),new Object[]{String.valueOf(i),user.get(i).getUsername(), user.get(i).getIpA(), user.get(i).getTime()});
+        }
     }
 
     private Users_Table() {
@@ -45,8 +58,6 @@ public class Users_Table extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         jPanel1.setBackground(new java.awt.Color(153, 204, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -57,10 +68,10 @@ public class Users_Table extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(114, 114, 114)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(320, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addGap(319, 319, 319))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -75,14 +86,14 @@ public class Users_Table extends javax.swing.JFrame {
 
             },
             new String [] {
-                "#ID", "Username", "Connection time"
+                "#ID", "Username", "Ip Address", "Connection time"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Long.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Long.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -98,9 +109,10 @@ public class Users_Table extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
             jTable1.getColumnModel().getColumn(1).setResizable(false);
             jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        jButton1.setText("jButton1");
+        jButton1.setText("AGGIORNA");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -112,14 +124,14 @@ public class Users_Table extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(343, 343, 343))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(154, 154, 154)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,7 +141,7 @@ public class Users_Table extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addGap(0, 29, Short.MAX_VALUE))
+                .addGap(0, 19, Short.MAX_VALUE))
         );
 
         pack();
@@ -140,25 +152,20 @@ public class Users_Table extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         DefaultTableModel table = (DefaultTableModel) jTable1.getModel();
-
-        for (int i = 0; i < this.user.size(); i++) {
-
-            String[] row = {String.valueOf(i),
-                user.get(i).getUsername(),
-                user.get(i).getTime()};
+        
+        for (int i = 0; i < table.getRowCount(); i++) {
+            table.removeRow(i);
         }
-
+        
         for (int i = 0; i < this.user.size(); i++) {
-
-            table.addRow(row);
+            table.insertRow(table.getRowCount(),new Object[]{String.valueOf(i),user.get(i).getUsername(), user.get(i).getIpA(), user.get(i).getTime()});
         }
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+         * @param args the command line arguments
+         */
+    public void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -181,12 +188,11 @@ public class Users_Table extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Users_Table.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Users_Table().setVisible(true);
-
             }
         });
     }
