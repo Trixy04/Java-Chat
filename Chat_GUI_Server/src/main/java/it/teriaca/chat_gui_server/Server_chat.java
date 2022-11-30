@@ -28,7 +28,7 @@ public class Server_chat {
     ArrayList<ClientHandler> clients;
 
     public Server_chat() throws IOException {
-        this.ss = new ServerSocket(portNumber);
+        this.ss = new ServerSocket(3000);
     }
 
     public void startServer(boolean running) throws IOException {
@@ -44,7 +44,6 @@ public class Server_chat {
             InetSocketAddress socketAddress = (InetSocketAddress) s.getRemoteSocketAddress();
             this.ipAddress = socketAddress.getAddress().getHostAddress();
             
-            System.out.println("Client connesso");
             DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM, yyyy 'alle' HH:mm:ss");
 
             String date = dateFormat.format(Calendar.getInstance().getTime());

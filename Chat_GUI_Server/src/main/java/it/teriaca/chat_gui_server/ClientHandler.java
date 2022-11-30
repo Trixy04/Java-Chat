@@ -75,12 +75,12 @@ public class ClientHandler extends Thread {
  
         try {        
             //contatore++;
-            System.out.println(br.readLine());
-            pr.println("Ciao, come ti chiami?");
-            String name = br.readLine().toUpperCase(); 
+            
+            String name = br.readLine(); 
             System.out.println(name);
             this.username = name;
             pr.println("Server: " + name + " sei l'utente n. " + c );
+            
             
             for(;;){
                 comando = br.readLine();

@@ -32,7 +32,7 @@ public class ServerConnection implements Runnable {
                     System.out.println("chiudo");
                     s.close();
                     System.exit(0);                }
-                System.out.println(serverResponse);
+                //System.out.println(serverResponse);
             }
         } catch (IOException e) {
             e.printStackTrace();
