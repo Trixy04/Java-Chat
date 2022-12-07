@@ -1,0 +1,66 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package it.teriaca.chat_gui_server;
+
+/**
+ *
+ * @author mattiateriaca
+ */
+public class Message {
+    String body;
+    String receiver;
+    String tag;
+    String sender;
+
+    public Message() {
+    }
+
+    public Message(String body, String receiver, String tag, String sender) {
+        this.body = body;
+        this.receiver = receiver;
+        this.tag = tag;
+        this.sender = sender;
+    }
+    
+    public Message(String body, String username){
+        this.body = body;
+        this.sender = username;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+    
+    
+    
+}
