@@ -32,8 +32,8 @@ public class Users_Table extends javax.swing.JFrame {
         this.user = array;
         this.renderer = new DefaultTableCellRenderer();
         renderer.setHorizontalAlignment(0);
-        
-        
+        this.setResizable(false);
+
         for (int i = 0; i < jTable1.getColumnCount(); i++) {
             jTable1.setDefaultRenderer(jTable1.getColumnClass(i), renderer);
         }
@@ -42,7 +42,7 @@ public class Users_Table extends javax.swing.JFrame {
         for (int i = 0; i < this.user.size(); i++) {
             table.insertRow(table.getRowCount(), new Object[]{String.valueOf(i), user.get(i).getUsername(), user.get(i).getIpA(), user.get(i).getTime()});
         }
-        
+
     }
 
     private Users_Table() {
@@ -170,7 +170,7 @@ public class Users_Table extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         DefaultTableModel table = (DefaultTableModel) jTable1.getModel();
-        
+
         for (int i = 0; i < jTable1.getRowCount(); i++) {
             table.removeRow(i);
         }

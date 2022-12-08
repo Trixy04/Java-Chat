@@ -83,14 +83,15 @@ public class ClientHandler extends Thread {
             String name = br.readLine(); 
             System.out.println(name);
             this.username = name;
-            pr.println("Server: " + name + " sei l'utente n. " + c );
-            
             
             for(;;){
 
                 comando = br.readLine();
                 message = objectMapper.readValue(comando, Message.class);
-                System.out.println(message.toString());
+                System.out.println(message.getSender());
+                System.out.println(message.getBody());
+                sendToAll(message);
+
                 
                 /*
                 else if(comando.equals("chiudi")){
@@ -121,7 +122,7 @@ public class ClientHandler extends Thread {
     /**
      * @param msg
      */
-    private void sendToAll(String msg) {
+    private void sendToAll(Message msg) {
         for (ClientHandler client : clients) {
             client.pr.println(msg);
         }

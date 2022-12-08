@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
+import java.net.UnknownHostException;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -26,24 +27,31 @@ public class Gui_chat extends javax.swing.JFrame {
     private Client_Java client;
     Socket s;
     PrintWriter pr;
+    static BufferedReader in;
+    ServerConnection serverConn;
 
     /**
      * Creates new form Gui_chat
+     *
+     * @param ip
+     * @param port
+     * @param username
+     * @throws java.lang.Exception
      */
     public Gui_chat(String ip, int port, String username) throws Exception {
-        System.out.println("3");
         initComponents();
         jPanel2.setLayout(new MigLayout("fillx"));
         this.client = new Client_Java();
         this.client.connection(ip, port, username);
         this.s = client.getS();
         this.setTitle(username);
-        System.out.println("4");
+        this.setVisible(true);
+        this.setResizable(false);
+        this.in = new BufferedReader(new InputStreamReader(s.getInputStream()));
     }
 
     public Gui_chat() {
         initComponents();
-
     }
 
     /**
@@ -153,11 +161,29 @@ public class Gui_chat extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {
+        // TODO add your handling code here:
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    String serverResponse;
+                    try {
+                        serverResponse = in.readLine();
+                        System.out.println(serverResponse);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Gui_chat.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+            }
+        });
+    }
+
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-       ObjectMapper objectMapper = new ObjectMapper();
-       Message message;
-        System.out.println("5");
+        ObjectMapper objectMapper = new ObjectMapper();
+        Message message;
         try {
             pr = new PrintWriter(s.getOutputStream(), true);
         } catch (IOException ex) {
@@ -168,59 +194,23 @@ public class Gui_chat extends javax.swing.JFrame {
         } catch (IOException ex) {
 
         }
-        String text = "Tu" + "\n" + jTextField1.getText();
+        String text = jTextField1.getText();
         message = new Message(text, this.getTitle());
-        Item_Right item = new Item_Right(text);
+        Item_Right item = new Item_Right("Tu" + "\n" + text);
         jPanel2.add(item, "wrap, w 80%, al right");
         jPanel2.repaint();
         jPanel2.revalidate();
+        jTextField1.setText("");
+
         try {
             String json = objectMapper.writeValueAsString(message);
             pr.println(json);
         } catch (JsonProcessingException ex) {
             //Logger.getLogger(Gui_chat.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-        
-        //JSON 
-        
+
     }//GEN-LAST:event_jButton1MouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) throws IOException {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Gui_chat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Gui_chat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Gui_chat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Gui_chat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                //new Gui_chat().setVisible(true);
-            }
-        });
-
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -230,4 +220,5 @@ public class Gui_chat extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
 }

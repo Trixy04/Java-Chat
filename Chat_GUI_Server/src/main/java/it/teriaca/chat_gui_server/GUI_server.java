@@ -44,6 +44,7 @@ public class GUI_server extends javax.swing.JFrame {
         this.jLabel6.setText(ipAddress);
         this.jLabel5.setText(Integer.toString(server.getPortNumber()));
         this.jLabel9.setText(server.getNameServer());
+        this.setResizable(false);
 
     }
 
@@ -276,7 +277,7 @@ public class GUI_server extends javax.swing.JFrame {
         this.jLabel11.setForeground(Color.red);
         this.jLabel11.setText("OFF");
         this.jLabel13.setText("");
-        
+
         try {
             this.server.stopServer();
         } catch (IOException ex) {

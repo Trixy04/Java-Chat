@@ -26,7 +26,7 @@ public class Conf_GUI extends javax.swing.JFrame {
         setTitle("Pagina configurazione");
         this.jTextField1.validate();
         this.jTextField2.validate();
-        //this.chat = new Gui_chat();
+        this.setResizable(false);
 
     }
 
@@ -211,11 +211,11 @@ public class Conf_GUI extends javax.swing.JFrame {
             String ipAddressServer = this.jTextField2.getText();
             int portNumberServer = Integer.parseInt(this.jTextField1.getText());
             String user = this.jTextField3.getText();
-            
-            this.setVisible(false);
+
             
             this.chat = new Gui_chat(ipAddressServer, portNumberServer, user);
-            this.chat.setVisible(true);
+            this.setVisible(false);
+            //this.chat.setVisible(true);
         } catch (Exception ex) {
             //Logger.getLogger(Conf_GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -239,37 +239,7 @@ public class Conf_GUI extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Conf_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Conf_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Conf_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Conf_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Conf_GUI().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
