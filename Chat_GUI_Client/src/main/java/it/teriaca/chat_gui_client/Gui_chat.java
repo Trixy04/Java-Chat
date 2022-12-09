@@ -13,8 +13,11 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.net.UnknownHostException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -38,20 +41,14 @@ public class Gui_chat extends javax.swing.JFrame {
      * @param username
      * @throws java.lang.Exception
      */
-    public Gui_chat(String ip, int port, String username) throws Exception {
+    public Gui_chat(String ip, int port, String username, Socket s) throws Exception {
         initComponents();
         jPanel2.setLayout(new MigLayout("fillx"));
-        this.client = new Client_Java();
-        this.client.connection(ip, port, username);
-        this.s = client.getS();
+        this.s = s;
         this.setTitle(username);
         this.setVisible(true);
         this.setResizable(false);
         this.in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-    }
-
-    public Gui_chat() {
-        initComponents();
     }
 
     /**
@@ -68,6 +65,7 @@ public class Gui_chat extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -86,7 +84,7 @@ public class Gui_chat extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,19 +109,18 @@ public class Gui_chat extends javax.swing.JFrame {
             }
         });
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 486, Short.MAX_VALUE)
+            .addGap(0, 495, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 583, Short.MAX_VALUE)
+            .addGap(0, 607, Short.MAX_VALUE)
         );
+
+        jScrollPane1.setViewportView(jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,7 +130,7 @@ public class Gui_chat extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTextField1)
                         .addGap(18, 18, 18)
@@ -144,9 +141,9 @@ public class Gui_chat extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -160,25 +157,6 @@ public class Gui_chat extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {
-        // TODO add your handling code here:
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    String serverResponse;
-                    try {
-                        serverResponse = in.readLine();
-                        System.out.println(serverResponse);
-                    } catch (IOException ex) {
-                        Logger.getLogger(Gui_chat.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                }
-            }
-        });
-    }
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
@@ -196,7 +174,11 @@ public class Gui_chat extends javax.swing.JFrame {
         }
         String text = jTextField1.getText();
         message = new Message(text, this.getTitle());
-        Item_Right item = new Item_Right("Tu" + "\n" + text);
+        
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String orario = String.valueOf(dtf.format(LocalDateTime.now()));
+        
+        Item_Right item = new Item_Right("Tu" + "\n" + text, orario);
         jPanel2.add(item, "wrap, w 80%, al right");
         jPanel2.repaint();
         jPanel2.revalidate();
@@ -205,9 +187,11 @@ public class Gui_chat extends javax.swing.JFrame {
         try {
             String json = objectMapper.writeValueAsString(message);
             pr.println(json);
+            System.out.println("entrato");
         } catch (JsonProcessingException ex) {
             //Logger.getLogger(Gui_chat.class.getName()).log(Level.SEVERE, null, ex);
         }
+
 
     }//GEN-LAST:event_jButton1MouseClicked
 
@@ -218,7 +202,34 @@ public class Gui_chat extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+    public class ServerConnection implements Runnable {
+
+        private Socket s;
+        BufferedReader in;
+
+        public ServerConnection(Socket s) throws IOException {
+            this.s = s;
+            this.in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+        }
+
+        @Override
+        public void run() {
+            try {
+                while (true) {
+                    String serverResponse = in.readLine();
+                    System.out.println(serverResponse);
+                    Item_Left item = new Item_Left("Server" + "\n" + "Ricevuto");
+                    jPanel2.add(item, "wrap, w 80%");
+                    jPanel2.repaint();
+                    jPanel2.revalidate();
+                }
+            } catch (IOException e) {
+            }
+        }
+    }
 
 }

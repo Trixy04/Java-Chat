@@ -17,15 +17,15 @@ public class Client_Java {
     private static String fine = "fine";
     private Socket s;
 
-    public Client_Java() {
-        //this.chat = new Gui_chat();
+    public Client_Java(String ipAddress, int portNumber, String user) throws Exception {
+        connection(ipAddress, portNumber, user);
     }
 
     public void connection(String ipAddress, int portNumber, String user) throws Exception {
 
         this.s = new Socket(ipAddress, portNumber);
-        ServerConnection serverConn = new ServerConnection(s);
-        //this.chat.setVisible(true);
+        this.chat = new Gui_chat(ipAddress, portNumber, user, s);
+        Gui_chat.ServerConnection serverConnect = chat.new ServerConnection(s);
 
         PrintWriter pr = new PrintWriter(s.getOutputStream(), true);
         BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -33,7 +33,7 @@ public class Client_Java {
 
         pr.println(user);
 
-        new Thread(serverConn).start();
+        new Thread(serverConnect).start();
         
     }
 

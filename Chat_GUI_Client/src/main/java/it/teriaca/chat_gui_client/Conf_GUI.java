@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  */
 public class Conf_GUI extends javax.swing.JFrame {
 
-    Gui_chat chat;
+    Client_Java chat;
 
     /**
      * Creates new form Conf_GUI
@@ -205,22 +205,21 @@ public class Conf_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        try {
-            // TODO add your handling code here:
-            
-            String ipAddressServer = this.jTextField2.getText();
-            int portNumberServer = Integer.parseInt(this.jTextField1.getText());
-            String user = this.jTextField3.getText();
 
-            
-            this.chat = new Gui_chat(ipAddressServer, portNumberServer, user);
-            this.setVisible(false);
-            //this.chat.setVisible(true);
+        // TODO add your handling code here:
+        String ipAddressServer = this.jTextField2.getText();
+        int portNumberServer = Integer.parseInt(this.jTextField1.getText());
+        String user = this.jTextField3.getText();
+
+        try {
+            this.chat = new Client_Java(ipAddressServer, portNumberServer, user);
         } catch (Exception ex) {
-            //Logger.getLogger(Conf_GUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Conf_GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        
+        this.setVisible(false);
+        //this.chat.setVisible(true);
+
 
     }//GEN-LAST:event_jButton2MouseClicked
 
@@ -239,7 +238,6 @@ public class Conf_GUI extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

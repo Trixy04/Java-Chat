@@ -4,15 +4,20 @@
  */
 package it.teriaca.chat_gui_client;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  *
  * @author mattiateriaca
  */
 public class Message {
+
     String body;
     String receiver;
     String tag;
     String sender;
+    String ora;
 
     public Message() {
     }
@@ -23,8 +28,12 @@ public class Message {
         this.tag = tag;
         this.sender = sender;
     }
-    
-    public Message(String body, String username){
+
+    public String getOra() {
+        return ora;
+    }
+
+    public Message(String body, String username) {
         this.body = body;
         this.sender = username;
     }
@@ -60,7 +69,5 @@ public class Message {
     public void setSender(String sender) {
         this.sender = sender;
     }
-    
-    
-    
+
 }

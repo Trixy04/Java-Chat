@@ -2,9 +2,10 @@ package it.teriaca.chat_gui_client;
 
 public class Item_Right extends javax.swing.JLayeredPane {
 
-    public Item_Right(String text) {
+    public Item_Right(String text, String ora) {
         initComponents();
         chat_Text1.setText(text);
+        jLabel2.setText(ora);
     }
 
     /**
@@ -19,20 +20,31 @@ public class Item_Right extends javax.swing.JLayeredPane {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         chat_Text1 = new it.teriaca.chat_gui_client.Chat_Text();
+        jLabel2 = new javax.swing.JLabel();
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/it/teriaca/chat_gui_client/user.png"))); // NOI18N
 
+        chat_Text1.setBackground(new java.awt.Color(221, 246, 255));
+        chat_Text1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jScrollPane1.setViewportView(chat_Text1);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
+        jLabel2.setText("jLabel2");
 
         setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
@@ -42,7 +54,10 @@ public class Item_Right extends javax.swing.JLayeredPane {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jScrollPane1)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -50,6 +65,7 @@ public class Item_Right extends javax.swing.JLayeredPane {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private it.teriaca.chat_gui_client.Chat_Text chat_Text1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

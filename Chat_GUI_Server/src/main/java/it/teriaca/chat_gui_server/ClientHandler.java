@@ -87,6 +87,7 @@ public class ClientHandler extends Thread {
             for(;;){
 
                 comando = br.readLine();
+                System.out.println("entrto");
                 message = objectMapper.readValue(comando, Message.class);
                 System.out.println(message.getSender());
                 System.out.println(message.getBody());
