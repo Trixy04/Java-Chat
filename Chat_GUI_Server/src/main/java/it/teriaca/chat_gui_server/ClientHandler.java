@@ -87,11 +87,15 @@ public class ClientHandler extends Thread {
             for(;;){
 
                 comando = br.readLine();
-                System.out.println("entrto");
+
                 message = objectMapper.readValue(comando, Message.class);
-                System.out.println(message.getSender());
-                System.out.println(message.getBody());
-                sendToAll(message);
+                
+                if(message.getBody().startsWith("@all")) 
+                    sendToAll(message, message.getSender());
+                else {
+                    System.out.println("Messaggio non broadcast");
+                }
+                
 
                 
                 /*
@@ -123,9 +127,15 @@ public class ClientHandler extends Thread {
     /**
      * @param msg
      */
-    private void sendToAll(Message msg) {
-        for (ClientHandler client : clients) {
-            client.pr.println(msg);
+    private void sendToAll(Message msg, String sender) {
+        
+        for(int i = 0; i < clients.size(); i++){
+            if(clients.get(i).getUsername().equals(sender)){
+                //client che invia MSB
+            }
+            else  
+                clients.get(i).pr.println(msg);
         }
+        
     }
 }
