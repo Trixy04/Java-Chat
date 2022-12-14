@@ -87,14 +87,19 @@ public class ClientHandler extends Thread {
             for (;;) {
 
                 comando = br.readLine();
-
                 message = objectMapper.readValue(comando, Message.class);
+                String json = objectMapper.writeValueAsString(message);
 
                 if (message.getBody().startsWith("@")) {
-
+                    String receiver = message.getBody().split("")[0];
+                    receiver = receiver.replace("@", "");
+                    String body = message.getBody().split(" ")[1];
+                    message.setBody(body);
+                    sendToPrivate(json, receiver, message.getSender());
+                    
                 } else {
-                    String json = objectMapper.writeValueAsString(message);
                     sendToAll(json, message.getSender());
+
                 }
 
                 /*
@@ -135,4 +140,22 @@ public class ClientHandler extends Thread {
         }
 
     }
-}
+
+    private void sendToPrivate(String msg, String receiver, String sender) {
+        boolean trovato = false;
+        for (int i = 0; i < clients.size(); i++) {
+            if (clients.get(i).getUsername().equals(receiver)) {
+                trovato = true;
+                clients.get(i).pr.println(msg);
+            }
+        }
+        if (trovato == false) {
+            for (int i = 0; i < clients.size(); i++) {
+                if (clients.get(i).getUsername().equals(sender)) {
+                    Message msgError = new Message("Utente non trovato", "Server");
+                    clients.get(i).pr.println(msgError);
+                }
+            }
+        }
+        }
+    }
