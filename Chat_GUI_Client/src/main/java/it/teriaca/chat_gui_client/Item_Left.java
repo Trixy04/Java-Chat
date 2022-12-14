@@ -2,10 +2,10 @@ package it.teriaca.chat_gui_client;
 
 public class Item_Left extends javax.swing.JLayeredPane {
 
-    public Item_Left(String text) {
+    public Item_Left(String text, String ora) {
         initComponents();
         chat_Text1.setText(text);
-        //jLabel2.setText(ora);
+        jLabel2.setText(ora);
     }
 
     /**
@@ -22,7 +22,7 @@ public class Item_Left extends javax.swing.JLayeredPane {
         chat_Text1 = new it.teriaca.chat_gui_client.Chat_Text();
         jLabel2 = new javax.swing.JLabel();
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("/Users/mattiateriaca/Desktop/user.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("/Users/mattiateriaca/Desktop/Java-Chat/Chat_GUI_Client/src/main/java/it/teriaca/chat_gui_client/user.png")); // NOI18N
 
         chat_Text1.setBackground(new java.awt.Color(221, 246, 255));
         jScrollPane1.setViewportView(chat_Text1);
