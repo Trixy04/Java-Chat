@@ -89,17 +89,17 @@ public class ClientHandler extends Thread {
                 comando = br.readLine();
                 message = objectMapper.readValue(comando, Message.class);
                 String json = objectMapper.writeValueAsString(message);
+                message.setTag(String.valueOf(message.getBody().charAt(0)));
 
-                if (message.getBody().startsWith("@")) {
-                    String receiver = message.getBody().split("")[0];
+                if (message.getTag().equals("@")) {
+                    String receiver = message.getBody().split(" ")[0];
                     receiver = receiver.replace("@", "");
                     String body = message.getBody().split(" ")[1];
                     message.setBody(body);
                     sendToPrivate(json, receiver, message.getSender());
-                    
+
                 } else {
                     sendToAll(json, message.getSender());
-
                 }
 
                 /*
@@ -157,5 +157,5 @@ public class ClientHandler extends Thread {
                 }
             }
         }
-        }
     }
+}

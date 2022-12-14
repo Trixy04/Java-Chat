@@ -13,8 +13,10 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import static java.lang.constant.ConstantDescs.NULL;
 import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -179,7 +181,6 @@ public class Gui_chat extends javax.swing.JFrame {
 
             String json = objectMapper.writeValueAsString(message);
             pr.println(json);
-            System.out.println("entrato");
 
         } catch (JsonProcessingException ex) {
             Logger.getLogger(Gui_chat.class.getName()).log(Level.SEVERE, null, ex);
@@ -223,9 +224,19 @@ public class Gui_chat extends javax.swing.JFrame {
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
                     String orario = String.valueOf(dtf.format(LocalDateTime.now()));
                     Item_Left item = new Item_Left(message.getSender() + "\n" + message.getBody(), orario);
+                    
+                    if(!message.getTag().equals("@")){
+                        
+                    }else{
+                        item.getChat_Text1().setBackground(Color.green);
+                    }
+                    
                     jPanel2.add(item, "wrap, w 80%");
                     jPanel2.repaint();
                     jPanel2.revalidate();
+                    
+                    
+
                 }
             } catch (IOException e) {
             }

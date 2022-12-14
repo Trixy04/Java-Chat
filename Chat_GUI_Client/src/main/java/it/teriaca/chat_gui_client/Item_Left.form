@@ -47,7 +47,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="/Users/mattiateriaca/Desktop/Java-Chat/Chat_GUI_Client/src/main/java/it/teriaca/chat_gui_client/user.png"/>
+          <Image iconType="3" name="/images/user.png"/>
         </Property>
       </Properties>
     </Component>
