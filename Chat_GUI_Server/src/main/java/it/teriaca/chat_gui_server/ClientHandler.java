@@ -23,8 +23,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 public class ClientHandler extends Thread {
+
     private Socket s;
     private String username;
     private String time;
@@ -74,30 +74,29 @@ public class ClientHandler extends Thread {
     }
 
     public void run() {
- 
-        try {        
+
+        try {
             //contatore++;
             ObjectMapper objectMapper = new ObjectMapper();
             Message message;
 
-            String name = br.readLine(); 
+            String name = br.readLine();
             System.out.println(name);
             this.username = name;
-            
-            for(;;){
+
+            for (;;) {
 
                 comando = br.readLine();
 
                 message = objectMapper.readValue(comando, Message.class);
-                
-                if(message.getBody().startsWith("@all")) 
-                    sendToAll(message, message.getSender());
-                else {
-                    System.out.println("Messaggio non broadcast");
-                }
-                
 
-                
+                if (message.getBody().startsWith("@")) {
+
+                } else {
+                    String json = objectMapper.writeValueAsString(message);
+                    sendToAll(json, message.getSender());
+                }
+
                 /*
                 else if(comando.equals("chiudi")){
                     pr.println("Tutte le connessioni saranno chiuse!");
@@ -114,28 +113,26 @@ public class ClientHandler extends Thread {
                     pr.println("Il comando inserito non è valido");
                 
                 }
-                */
+                 */
             }
-        }
-        catch(Exception e){
-            
-        }    
+        } catch (Exception e) {
 
+        }
 
     }
 
     /**
      * @param msg
      */
-    private void sendToAll(Message msg, String sender) {
-        
-        for(int i = 0; i < clients.size(); i++){
-            if(clients.get(i).getUsername().equals(sender)){
+    private void sendToAll(String msg, String sender) {
+
+        for (int i = 0; i < clients.size(); i++) {
+            if (clients.get(i).getUsername().equals(sender)) {
                 //client che invia MSB
-            }
-            else  
+            } else {
                 clients.get(i).pr.println(msg);
+            }
         }
-        
+
     }
 }

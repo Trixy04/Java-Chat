@@ -205,6 +205,8 @@ public class Gui_chat extends javax.swing.JFrame {
 
         private Socket s;
         BufferedReader in;
+        ObjectMapper objectMapper = new ObjectMapper();
+        private Message message = new Message();
 
         public ServerConnection(Socket s) throws IOException {
             this.s = s;
@@ -216,8 +218,10 @@ public class Gui_chat extends javax.swing.JFrame {
             try {
                 while (true) {
                     String serverResponse = in.readLine();
-                    System.out.println(serverResponse);
-                    Item_Left item = new Item_Left("Server" + "\n" + "Ricevuto");
+                    message = objectMapper.readValue(serverResponse, Message.class);
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+                    String orario = String.valueOf(dtf.format(LocalDateTime.now()));
+                    Item_Left item = new Item_Left(message.getSender() + "\n" + message.getBody(), orario);
                     jPanel2.add(item, "wrap, w 80%");
                     jPanel2.repaint();
                     jPanel2.revalidate();
