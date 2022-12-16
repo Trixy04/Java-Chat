@@ -36,7 +36,7 @@ public class Message {
     public Message(String body, String username) {
         this.body = body;
         this.sender = username;
-        this.tag = null;
+        this.tag = "!";
         this.ora = null;
     }
 

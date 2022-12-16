@@ -68,6 +68,7 @@ public class Gui_chat extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,8 +84,8 @@ public class Gui_chat extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -114,7 +115,7 @@ public class Gui_chat extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 506, Short.MAX_VALUE)
+            .addGap(0, 528, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,25 +124,39 @@ public class Gui_chat extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jPanel2);
 
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/guide .png"))); // NOI18N
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTextField1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -160,43 +175,52 @@ public class Gui_chat extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        try {
-            // TODO add your handling code here:
-            ObjectMapper objectMapper = new ObjectMapper();
-            Message message;
-            pr = new PrintWriter(s.getOutputStream(), true);
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+        if (!jTextField1.getText().equals("")) {
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                Message message;
+                pr = new PrintWriter(s.getOutputStream(), true);
 
-            String text = jTextField1.getText();
+                BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
 
-            message = new Message(text, this.jLabel2.getText());
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-            String orario = String.valueOf(dtf.format(LocalDateTime.now()));
-            Item_Right item = new Item_Right("Tu" + "\n" + text, orario);
-            jPanel2.add(item, "wrap, w 80%, al right");
-            jPanel2.repaint();
-            jPanel2.revalidate();
-            jTextField1.setText("");
+                String text = jTextField1.getText();
 
-            String json = objectMapper.writeValueAsString(message);
-            pr.println(json);
+                message = new Message(text, this.jLabel2.getText());
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+                String orario = String.valueOf(dtf.format(LocalDateTime.now()));
+                Item_Right item = new Item_Right("Tu" + "\n" + text, orario);
+                jPanel2.add(item, "wrap, w 80%, al right");
+                jPanel2.repaint();
+                jPanel2.revalidate();
+                jTextField1.setText("");
 
-        } catch (JsonProcessingException ex) {
-            Logger.getLogger(Gui_chat.class.getName()).log(Level.SEVERE, null, ex);
+                String json = objectMapper.writeValueAsString(message);
+                pr.println(json);
 
-        } catch (IOException ex) {
-            Logger.getLogger(Gui_chat.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JsonProcessingException ex) {
+                Logger.getLogger(Gui_chat.class.getName()).log(Level.SEVERE, null, ex);
+
+            } catch (IOException ex) {
+                Logger.getLogger(Gui_chat.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        // TODO add your handling code here:
 
 
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // TODO add your handling code here:
+        new StarterGuide().setVisible(true);
+    }//GEN-LAST:event_jLabel3MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -215,6 +239,14 @@ public class Gui_chat extends javax.swing.JFrame {
             this.in = new BufferedReader(new InputStreamReader(s.getInputStream()));
         }
 
+        private void formWindowClosing(java.awt.event.WindowEvent evt) throws IOException {
+            // TODO add your handling code here:
+            Message chiudo = new Message("?chiudo",jLabel2.getText());
+            String json = objectMapper.writeValueAsString(chiudo);
+            pr.println(json);
+            this.s.close();
+        }
+
         @Override
         public void run() {
             try {
@@ -224,18 +256,9 @@ public class Gui_chat extends javax.swing.JFrame {
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
                     String orario = String.valueOf(dtf.format(LocalDateTime.now()));
                     Item_Left item = new Item_Left(message.getSender() + "\n" + message.getBody(), orario);
-                    
-                    if(!message.getTag().equals("@")){
-                        
-                    }else{
-                        item.getChat_Text1().setBackground(Color.green);
-                    }
-                    
                     jPanel2.add(item, "wrap, w 80%");
                     jPanel2.repaint();
                     jPanel2.revalidate();
-                    
-                    
 
                 }
             } catch (IOException e) {

@@ -31,7 +31,7 @@ public class Client_Java {
         BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
         BufferedReader tastiera = new BufferedReader(new InputStreamReader(System.in));
 
-        pr.println(user);
+        pr.println(user.toLowerCase());
 
         new Thread(serverConnect).start();
         

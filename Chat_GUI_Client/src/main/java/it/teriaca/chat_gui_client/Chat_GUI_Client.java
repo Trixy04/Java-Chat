@@ -12,7 +12,9 @@ package it.teriaca.chat_gui_client;
 public class Chat_GUI_Client {
 
     public static void main(String[] args) {
+        
         Conf_GUI conf = new Conf_GUI();
         conf.setVisible(true);
+        new StarterGuide().setVisible(true);
     }
 }

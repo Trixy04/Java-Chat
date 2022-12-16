@@ -40,5 +40,6 @@ public class Chat_Text extends JTextPane {
         g2.setColor(borderColor);
         g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 5, 5);
         super.paintComponent(grphcs);
+        this.setEditable(false);
     }
 }
