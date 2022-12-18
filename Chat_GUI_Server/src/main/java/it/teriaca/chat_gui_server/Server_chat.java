@@ -19,13 +19,13 @@ import java.util.List;
  */
 public class Server_chat {
 
-    private static int contatore = 0;
-    private int portNumber = 3000;
-    private String nameServer = "Server_Chat_Teriaca-Rocchini";
-    private String name;
-    private String ipAddress;
-    ServerSocket ss;
-    ArrayList<ClientHandler> clients;
+    public static int contatore = 0;
+    public int portNumber = 3000;
+    public String nameServer = "Server_Chat_Teriaca-Rocchini";
+    public String name;
+    public String ipAddress;
+    public ServerSocket ss;
+    public ArrayList<ClientHandler> clients;
 
     public Server_chat() throws IOException {
         this.ss = new ServerSocket(3000);
@@ -48,7 +48,7 @@ public class Server_chat {
 
             String date = dateFormat.format(Calendar.getInstance().getTime());
 
-            ClientHandler client = new ClientHandler(s, contatore, clients, name, date, ipAddress);
+            ClientHandler client = new ClientHandler(s, contatore, name, date, ipAddress, ss, clients);
             clients.add(client);
             client.start();
         }

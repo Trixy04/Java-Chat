@@ -22,7 +22,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import net.miginfocom.swing.MigLayout;
+import java.applet.Applet;
+import java.applet.AudioClip;
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+import javax.sound.sampled.*;
 
 /**
  *
@@ -55,6 +62,8 @@ public class Gui_chat extends javax.swing.JFrame {
         this.setVisible(true);
         this.setResizable(false);
         this.in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -177,6 +186,9 @@ public class Gui_chat extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
 
         if (!jTextField1.getText().equals("")) {
+            if (jTextField1.getText().equals("/close")) {
+                System.out.println("CHIUDO");
+            }
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
                 Message message;
@@ -227,7 +239,7 @@ public class Gui_chat extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
-    public class ServerConnection implements Runnable {
+    public class ServerConnection extends Applet implements Runnable {
 
         private Socket s;
         BufferedReader in;
@@ -239,11 +251,12 @@ public class Gui_chat extends javax.swing.JFrame {
             this.in = new BufferedReader(new InputStreamReader(s.getInputStream()));
         }
 
-        private void formWindowClosing(java.awt.event.WindowEvent evt) throws IOException {
+        private void formWindowClosing(java.awt.event.WindowEvent evt) throws IOException, InterruptedException {
             // TODO add your handling code here:
-            Message chiudo = new Message("?chiudo",jLabel2.getText());
+            Message chiudo = new Message("?chiudo", jLabel2.getText());
             String json = objectMapper.writeValueAsString(chiudo);
             pr.println(json);
+            wait(1000);
             this.s.close();
         }
 
@@ -253,12 +266,20 @@ public class Gui_chat extends javax.swing.JFrame {
                 while (true) {
                     String serverResponse = in.readLine();
                     message = objectMapper.readValue(serverResponse, Message.class);
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-                    String orario = String.valueOf(dtf.format(LocalDateTime.now()));
-                    Item_Left item = new Item_Left(message.getSender() + "\n" + message.getBody(), orario);
-                    jPanel2.add(item, "wrap, w 80%");
-                    jPanel2.repaint();
-                    jPanel2.revalidate();
+
+                    if (message.getBody().equals("close") && message.getSender().equals("Server")) {
+                        this.s.close();
+                        System.exit(0);
+                    } else {
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+                        String orario = String.valueOf(dtf.format(LocalDateTime.now()));
+                        Item_Left item = new Item_Left(message.getSender() + "\n" + message.getBody(), orario);
+                        jPanel2.add(item, "wrap, w 80%");
+                        jPanel2.repaint();
+                        jPanel2.revalidate();
+                        
+                        
+                    }
 
                 }
             } catch (IOException e) {

@@ -6,8 +6,11 @@ package it.teriaca.chat_gui_client;
 
 import java.awt.TextField;
 import java.io.IOException;
+import static java.lang.constant.ConstantDescs.NULL;
+import java.net.SocketTimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,7 +30,6 @@ public class Conf_GUI extends javax.swing.JFrame {
         this.jTextField1.validate();
         this.jTextField2.validate();
         this.setResizable(false);
-        
 
     }
 
@@ -242,11 +244,21 @@ public class Conf_GUI extends javax.swing.JFrame {
         int portNumberServer = Integer.parseInt(this.jTextField1.getText());
         String user = this.jTextField3.getText();
 
-        try {
-            this.chat = new Client_Java(ipAddressServer, portNumberServer, user);
-        } catch (Exception ex) {
-            Logger.getLogger(Conf_GUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+            if ((!jTextField3.getText().equals("") && !jTextField2.getText().equals("")) && !this.jTextField1.getText().equals("")) {
+            try {
+                this.chat = new Client_Java(ipAddressServer, portNumberServer, user);
+            } catch (SocketTimeoutException exception) {
+                Logger.getLogger(Conf_GUI.class.getName()).log(Level.SEVERE, null, exception);
+            } catch (Exception ex) {
+                Logger.getLogger(Conf_GUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            } else {
+                JOptionPane.showMessageDialog(this, "Tutti i campi sono obbligatori");
+                new Chat_GUI_Client();
+            }
+            
+        
 
         this.setVisible(false);
         //this.chat.setVisible(true);
@@ -272,7 +284,7 @@ public class Conf_GUI extends javax.swing.JFrame {
 
     private void jPanel2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel2KeyPressed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jPanel2KeyPressed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
