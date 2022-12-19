@@ -136,7 +136,7 @@ public class StarterGuide extends javax.swing.JFrame {
         jTextArea5.setColumns(20);
         jTextArea5.setLineWrap(true);
         jTextArea5.setRows(5);
-        jTextArea5.setText("La chatroom gestisce più possibilità di comandi, di seguito sono elencati i comandi accettati e la sintassi da utilizzare:\n\n- Messaggio PRIVATO - - > si ottiene digitando @ seguito dall’user dell’utente da raggiungere, seguito da spazio e dal messaggio che si vuole inviare. Esempio: @user ciao user;\n\n- Messaggio in BROADCAST (a tutti) - - > basta digitare il messaggio che si vuole inviare senza dover utilizzare alcuna sintassi speciale;\n\n- LISTA utenti connessi - - > se vuoi sapere la lista degli utenti connessi, basterà digitare il comando /list e il server risponderà con un messaggio contenente tutti gli utenti attualmente connessi;\n\nATTENZIONE: in caso di errore di sintassi il server risponde con un messaggio contente il testo “Messaggio non riconosciuto” oppure con descrizione del problema sorto.");
+        jTextArea5.setText("La chatroom gestisce più possibilità di comandi, di seguito sono elencati i comandi accettati e la sintassi da utilizzare:\n\n- Messaggio PRIVATO - - > si ottiene digitando @ seguito dall’user dell’utente da raggiungere, seguito da spazio e dal messaggio che si vuole inviare. Esempio: @user ciao user;\n\n- Messaggio in BROADCAST (a tutti) - - > basta digitare il messaggio che si vuole inviare senza dover utilizzare alcuna sintassi speciale;\n\n- LISTA utenti connessi - - > se vuoi sapere la lista degli utenti connessi, basterà digitare il comando /list e il server risponderà con un messaggio contenente tutti gli utenti attualmente connessi;\n\n- CHIUSURA - - > se vuoi uscure dalla chat e effettuare la disconnessione ti basterà digitare il comando /close e premere invia. Verrà disconnessa la chat e chiusa la finestra.\n\nATTENZIONE: in caso di errore di sintassi il server risponde con un messaggio contente il testo “Messaggio non riconosciuto” oppure con descrizione del problema sorto.");
         jTextArea5.setWrapStyleWord(true);
         jScrollPane5.setViewportView(jTextArea5);
 
@@ -151,10 +151,10 @@ public class StarterGuide extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(103, 103, 103)
                 .addComponent(jLabel3)
-                .addGap(112, 112, 112))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

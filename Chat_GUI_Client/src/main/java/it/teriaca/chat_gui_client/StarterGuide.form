@@ -231,7 +231,7 @@
                 <Property name="columns" type="int" value="20"/>
                 <Property name="lineWrap" type="boolean" value="true"/>
                 <Property name="rows" type="int" value="5"/>
-                <Property name="text" type="java.lang.String" value="La chatroom gestisce pi&#xf9; possibilit&#xe0; di comandi, di seguito sono elencati i comandi accettati e la sintassi da utilizzare:&#xa;&#xa;- Messaggio PRIVATO - - &gt; si ottiene digitando @ seguito dall&#x2019;user dell&#x2019;utente da raggiungere, seguito da spazio e dal messaggio che si vuole inviare. Esempio: @user ciao user;&#xa;&#xa;- Messaggio in BROADCAST (a tutti) - - &gt; basta digitare il messaggio che si vuole inviare senza dover utilizzare alcuna sintassi speciale;&#xa;&#xa;- LISTA utenti connessi - - &gt; se vuoi sapere la lista degli utenti connessi, baster&#xe0; digitare il comando /list e il server risponder&#xe0; con un messaggio contenente tutti gli utenti attualmente connessi;&#xa;&#xa;ATTENZIONE: in caso di errore di sintassi il server risponde con un messaggio contente il testo &#x201c;Messaggio non riconosciuto&#x201d; oppure con descrizione del problema sorto."/>
+                <Property name="text" type="java.lang.String" value="La chatroom gestisce pi&#xf9; possibilit&#xe0; di comandi, di seguito sono elencati i comandi accettati e la sintassi da utilizzare:&#xa;&#xa;- Messaggio PRIVATO - - &gt; si ottiene digitando @ seguito dall&#x2019;user dell&#x2019;utente da raggiungere, seguito da spazio e dal messaggio che si vuole inviare. Esempio: @user ciao user;&#xa;&#xa;- Messaggio in BROADCAST (a tutti) - - &gt; basta digitare il messaggio che si vuole inviare senza dover utilizzare alcuna sintassi speciale;&#xa;&#xa;- LISTA utenti connessi - - &gt; se vuoi sapere la lista degli utenti connessi, baster&#xe0; digitare il comando /list e il server risponder&#xe0; con un messaggio contenente tutti gli utenti attualmente connessi;&#xa;&#xa;- CHIUSURA - - &gt; se vuoi uscure dalla chat e effettuare la disconnessione ti baster&#xe0; digitare il comando /close e premere invia. Verr&#xe0; disconnessa la chat e chiusa la finestra.&#xa;&#xa;ATTENZIONE: in caso di errore di sintassi il server risponde con un messaggio contente il testo &#x201c;Messaggio non riconosciuto&#x201d; oppure con descrizione del problema sorto."/>
                 <Property name="wrapStyleWord" type="boolean" value="true"/>
               </Properties>
             </Component>
@@ -249,10 +249,10 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="103" max="-2" attributes="0"/>
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

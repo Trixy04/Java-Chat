@@ -11,6 +11,7 @@ import java.net.SocketTimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import java.net.ConnectException;
 
 /**
  *
@@ -239,29 +240,21 @@ public class Conf_GUI extends javax.swing.JFrame {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
 
-        // TODO add your handling code here:
-        String ipAddressServer = this.jTextField2.getText();
-        int portNumberServer = Integer.parseInt(this.jTextField1.getText());
-        String user = this.jTextField3.getText();
+        try {
+            // TODO add your handling code here:
+            String ipAddressServer = this.jTextField2.getText();
+            int portNumberServer = Integer.parseInt(this.jTextField1.getText());
+            String user = this.jTextField3.getText();
 
-        
-            if ((!jTextField3.getText().equals("") && !jTextField2.getText().equals("")) && !this.jTextField1.getText().equals("")) {
-            try {
-                this.chat = new Client_Java(ipAddressServer, portNumberServer, user);
-            } catch (SocketTimeoutException exception) {
-                Logger.getLogger(Conf_GUI.class.getName()).log(Level.SEVERE, null, exception);
-            } catch (Exception ex) {
-                Logger.getLogger(Conf_GUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            } else {
-                JOptionPane.showMessageDialog(this, "Tutti i campi sono obbligatori");
-                new Chat_GUI_Client();
-            }
-            
-        
+            this.chat = new Client_Java(ipAddressServer, portNumberServer, user);
 
-        this.setVisible(false);
-        //this.chat.setVisible(true);
+            this.setVisible(false);
+            //this.chat.setVisible(true);
+        } catch (ConnectException ex) {
+            JOptionPane.showMessageDialog(this, "Eggs are not supposed to be green.");
+        } catch (Exception ex) {
+            Logger.getLogger(Conf_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
 
     }//GEN-LAST:event_jButton2MouseClicked

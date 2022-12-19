@@ -51,6 +51,7 @@ public class ClientHandler extends Thread {
     static String nomeServer = "Server_Teriaca";
     private ArrayList<ClientHandler> clients;
     ObjectMapper objectMapper = new ObjectMapper();
+    private Server_chat sChat;
 
     // contatore = contatore+1;
     public ClientHandler(Socket s, int c, String name, String time, String ip, ServerSocket ss, ArrayList x) throws IOException {
@@ -64,6 +65,7 @@ public class ClientHandler extends Thread {
         this.ipA = ip;
         this.username = name;
         this.ss = ss;
+        this.sChat = new Server_chat();
         try {
             pr = new PrintWriter(s.getOutputStream(), true);
             br = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -96,8 +98,9 @@ public class ClientHandler extends Thread {
             Message message;
             
             String name = br.readLine();
-            System.out.println(name);
-            this.username = name;
+            message = objectMapper.readValue(name, Message.class);
+            this.username = message.getSender();
+            System.out.println(username);
             
             for (;;) {
                 /*

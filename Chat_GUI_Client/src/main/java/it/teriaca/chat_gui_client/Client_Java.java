@@ -5,6 +5,7 @@ package it.teriaca.chat_gui_client;
  * @author teria
  *
  */
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,13 +26,17 @@ public class Client_Java {
 
         this.s = new Socket(ipAddress, portNumber);
         this.chat = new Gui_chat(ipAddress, portNumber, user, s);
+        this.chat.setVisible(true);
         Gui_chat.ServerConnection serverConnect = chat.new ServerConnection(s);
 
         PrintWriter pr = new PrintWriter(s.getOutputStream(), true);
         BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
         BufferedReader tastiera = new BufferedReader(new InputStreamReader(System.in));
+        ObjectMapper objectMapper = new ObjectMapper();
+        Message name = new Message("", user.toLowerCase());
+        String json = objectMapper.writeValueAsString(name);
 
-        pr.println(user.toLowerCase());
+        pr.println(json);
 
         new Thread(serverConnect).start();
         

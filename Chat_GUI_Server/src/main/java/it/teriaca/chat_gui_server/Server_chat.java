@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 /**
  *
  * @author teria
@@ -28,11 +29,11 @@ public class Server_chat {
     public ArrayList<ClientHandler> clients;
 
     public Server_chat() throws IOException {
-        this.ss = new ServerSocket(3000);
+
     }
 
     public void startServer(boolean running) throws IOException {
-
+        this.ss = new ServerSocket(3000);
         this.clients = new ArrayList<ClientHandler>();
 
         System.out.println("Server in ascolto sulla porta 3000");
@@ -40,10 +41,10 @@ public class Server_chat {
         while (running) {
             Socket s = ss.accept();
             this.contatore++;
-            
+
             InetSocketAddress socketAddress = (InetSocketAddress) s.getRemoteSocketAddress();
             this.ipAddress = socketAddress.getAddress().getHostAddress();
-            
+
             DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM, yyyy 'alle' HH:mm:ss");
 
             String date = dateFormat.format(Calendar.getInstance().getTime());
@@ -78,6 +79,10 @@ public class Server_chat {
 
     public int getContatore() {
         return contatore;
+    }
+
+    public void deleteUser(ClientHandler x) {
+        clients.remove(x);
     }
 
 }

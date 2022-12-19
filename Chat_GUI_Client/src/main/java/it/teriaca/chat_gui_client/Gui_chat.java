@@ -59,7 +59,7 @@ public class Gui_chat extends javax.swing.JFrame {
         this.s = s;
         this.setTitle("JAVA CHAT - Area Client");
         this.jLabel2.setText(username);
-        this.setVisible(true);
+        this.setVisible(false);
         this.setResizable(false);
         this.in = new BufferedReader(new InputStreamReader(s.getInputStream()));
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
