@@ -8,7 +8,7 @@
     - [Diagramma della disconnessione](#diagramma-di-disconnessione)
     - [Diagramma del messaggio pubblico](#diagramma-del-messaggio-broadcast)
     - [Diagramma del messaggio privato](#diagramma-del-messaggio-private)
-- <a href="#Lic">Licenza</a>
+ - [Licenza](#Licenza)
 
 ## <a name="Descrizione">Descrizione</a>
 Progettazione e implementazione di una chat sviluppata in Java, basata sull'architettura Client - Server, basandosi sul protocollo TCP. Il Client e il server comunicano in modalità full duplex. La chat supporta l'invio di messaggi in broadcast sia messaggi "privati".
@@ -97,6 +97,6 @@ sequenceDiagram
     Server->>Client: messaggio inviato
 ```
 
-## <a name="Lic">Licenza</a>
+## Licenza
 Questo software è sotto licenza MIT, consultabile al seguente [link](https://mit-license.org/)
 
