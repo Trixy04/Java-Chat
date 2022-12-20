@@ -18,7 +18,7 @@ Progettazione e implementazione di una chat sviluppata in Java, basata sull'arch
 
 ## <a name="TipM">Tipologia messaggi</a>
 Tutti i messaggi scambiati saranno serializzati in <a href="https://www.json.org/json-it.html">JSON</a>.<br><br>
-Ogni comando come riportato in tabella sottostante, è separata dal testo da `:`.<br><br>
+Ogni comando come riportato in tabella sottostante, è separata dal testo da `" "`.<br><br>
 Esempio -> `MSB:`
 
 <table>
