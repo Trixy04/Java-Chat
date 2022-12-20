@@ -5,6 +5,7 @@
 package it.teriaca.chat_gui_server;
 
 import java.io.IOException;
+import static java.lang.constant.ConstantDescs.NULL;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -13,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -39,6 +41,7 @@ public class Server_chat {
         System.out.println("Server in ascolto sulla porta 3000");
         //boolean running = true;
         while (running) {
+
             Socket s = ss.accept();
             this.contatore++;
 
@@ -63,8 +66,12 @@ public class Server_chat {
         return clients;
     }
 
-    public void stopServer() throws IOException {
+    public void stopServer(GUI_server x) throws IOException {
         System.out.println("Server chiuso");
+        if (ss == NULL) {
+            JOptionPane.showMessageDialog(x, "Server non avviato");
+
+        }
         ss.close();
         System.exit(0);
     }

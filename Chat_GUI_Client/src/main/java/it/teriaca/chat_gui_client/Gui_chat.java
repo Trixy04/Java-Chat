@@ -26,10 +26,13 @@ import javax.swing.JFrame;
 import net.miginfocom.swing.MigLayout;
 import java.applet.Applet;
 import java.applet.AudioClip;
+import static java.awt.Color.GREEN;
+import static java.awt.Color.YELLOW;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 import javax.sound.sampled.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -266,10 +269,19 @@ public class Gui_chat extends javax.swing.JFrame {
                 while (true) {
                     String serverResponse = in.readLine();
                     message = objectMapper.readValue(serverResponse, Message.class);
-
+                    
+                    System.out.println(message.getTag());
+                    
                     if (message.getBody().equals("close") && message.getSender().equals("Server")) {
                         this.s.close();
                         System.exit(0);
+                    } else if (message.getTag().equals("@")) {
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+                        String orario = String.valueOf(dtf.format(LocalDateTime.now()));
+                        Item_Left item = new Item_Left(message.getSender() + " (Private Message) " + "\n" + message.getBody(), orario);
+                        jPanel2.add(item, "wrap, w 80%");
+                        jPanel2.repaint();
+                        jPanel2.revalidate();
                     } else {
                         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
                         String orario = String.valueOf(dtf.format(LocalDateTime.now()));
@@ -277,8 +289,6 @@ public class Gui_chat extends javax.swing.JFrame {
                         jPanel2.add(item, "wrap, w 80%");
                         jPanel2.repaint();
                         jPanel2.revalidate();
-                        
-                        
                     }
 
                 }

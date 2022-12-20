@@ -240,20 +240,28 @@ public class Conf_GUI extends javax.swing.JFrame {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
 
-        try {
-            // TODO add your handling code here:
-            String ipAddressServer = this.jTextField2.getText();
-            int portNumberServer = Integer.parseInt(this.jTextField1.getText());
-            String user = this.jTextField3.getText();
+        // TODO add your handling code here:
+        String ipAddressServer = this.jTextField2.getText();
+        int portNumberServer = Integer.parseInt(this.jTextField1.getText());
+        String user = this.jTextField3.getText();
 
-            this.chat = new Client_Java(ipAddressServer, portNumberServer, user);
+        if ((this.jTextField2.getText().isBlank() || this.jTextField1.getText().isBlank()) || this.jTextField3.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Tutti i campi sono obbligatori");
+
+        } else {
+            try {
+                this.chat = new Client_Java(ipAddressServer, portNumberServer, user);
+            } catch (IOException ex) {
+                //Logger.getLogger(Conf_GUI.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Ip Address o Port number non \n corretti, connessione rifiutata");
+                return;
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Ip Address o Port number non \n corretti, connessione rifiutata");
+                return;
+            }
 
             this.setVisible(false);
-            //this.chat.setVisible(true);
-        } catch (ConnectException ex) {
-            JOptionPane.showMessageDialog(this, "Eggs are not supposed to be green.");
-        } catch (Exception ex) {
-            Logger.getLogger(Conf_GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 

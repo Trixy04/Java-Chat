@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class Client_Java {
 
@@ -22,7 +25,7 @@ public class Client_Java {
         connection(ipAddress, portNumber, user);
     }
 
-    public void connection(String ipAddress, int portNumber, String user) throws Exception {
+    public void connection(String ipAddress, int portNumber, String user) throws IOException, Exception {
 
         this.s = new Socket(ipAddress, portNumber);
         this.chat = new Gui_chat(ipAddress, portNumber, user, s);
@@ -33,18 +36,18 @@ public class Client_Java {
         BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
         BufferedReader tastiera = new BufferedReader(new InputStreamReader(System.in));
         ObjectMapper objectMapper = new ObjectMapper();
-        Message name = new Message("", user.toLowerCase());
+
+        Message name = new Message(user.toLowerCase(), user.toLowerCase());
         String json = objectMapper.writeValueAsString(name);
 
         pr.println(json);
 
         new Thread(serverConnect).start();
-        
+
     }
 
     public Socket getS() {
         return s;
     }
-
 
 }

@@ -31,7 +31,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ClientHandler extends Thread {
-    
+
     private Socket s;
     private String username;
     private String time;
@@ -41,10 +41,10 @@ public class ClientHandler extends Thread {
     public Socket getS() {
         return s;
     }
-    
+
     private PrintWriter pr = null;
     private BufferedReader br = null;
-    
+
     private int c;
     private String comando;
     private String output;
@@ -73,26 +73,26 @@ public class ClientHandler extends Thread {
             e.printStackTrace();
         }
     }
-    
+
     public ServerSocket getSs() {
         return ss;
     }
-    
+
     public String getIpA() {
         return ipA;
     }
-    
+
     public String getUsername() {
         return username;
     }
-    
+
     public String getTime() {
         return time;
     }
-    
+
     @Override
     public void run() {
-        
+
         try {
             //contatore++;
             Message message;
@@ -100,58 +100,50 @@ public class ClientHandler extends Thread {
             String name = br.readLine();
             message = objectMapper.readValue(name, Message.class);
             this.username = message.getSender();
-            System.out.println(username);
-            
+
             for (;;) {
-                /*
-                if(Objects.isNull(br.readLine())){
-                    this.s.close();
-                    aggiornaConnessione();
-                    break;
-                }
-                 */
+
                 comando = br.readLine();
-                
+
                 String body = "";
                 int pos = 0;
                 message = objectMapper.readValue(comando, Message.class);
                 String json = objectMapper.writeValueAsString(message);
                 message.setTag(String.valueOf(message.getBody().charAt(0)));
-                
+
                 switch (message.getTag()) {
                     case "@" -> {
                         String receiver = message.getBody().split(" ")[0];
                         receiver = receiver.replace("@", "");
-                        
+
                         for (int i = 0; i < 50; i++) {
                             if (message.getBody().charAt(i + 1) == ' ') {
                                 pos = i + 1;
                                 break;
                             }
-                            
                         }
                         for (int i = pos; i < message.getBody().length(); i++) {
                             body = body + message.getBody().charAt(i);
                         }
                         body = body.replaceAll("^.", "");
-                        
+
                         message.setBody(body);
                         message.setTag("@");
                         String msg = objectMapper.writeValueAsString(message);
-                        
+
                         sendToPrivate(msg, receiver, message.getSender());
-                        
+
                     }
-                    
+
                     case "/" -> {
                         String receiver = message.getBody().split(" ")[0];
                         receiver = receiver.replace("/", "");
                         //System.out.println(receiver);
-                        
+
                         switch (receiver) {
                             case "list" ->
                                 listUsers(message.getSender());
-                            
+
                             case "close" -> {
                                 Message msgerror = new Message("close", "Server");
                                 String msgE;
@@ -160,7 +152,7 @@ public class ClientHandler extends Thread {
                                 this.s.close();
                                 aggiornaConnessione();
                             }
-                            
+
                             default -> {
                                 Message msgerror = new Message("Comando non riconosciuto", "Server");
                                 String msgE;
@@ -168,25 +160,25 @@ public class ClientHandler extends Thread {
                                 clients.get(researchUser(message.getSender())).pr.println(msgE);
                             }
                         }
-                        
+
                     }
-                    
+
                     default ->
                         sendToAll(json, message.getSender());
                 }
-                
+
             }
         } catch (IOException e) {
-            
+
         }
-        
+
     }
 
     /**
      * @param msg
      */
     private void sendToAll(String msg, String sender) {
-        
+
         for (int i = 0; i < clients.size(); i++) {
             if (clients.get(i).getUsername().equals(sender)) {
                 //client che invia MSB
@@ -194,9 +186,9 @@ public class ClientHandler extends Thread {
                 clients.get(i).pr.println(msg);
             }
         }
-        
+
     }
-    
+
     private void listUsers(String sender) throws JsonProcessingException, IOException {
         aggiornaConnessione();
         String listaUsers = "### LISTA UTENTI CONNESSI ###" + "\n";
@@ -205,8 +197,8 @@ public class ClientHandler extends Thread {
             if (!clients.get(i).getS().isClosed()) {
                 if (!clients.get(i).getUsername().equals(sender)) {
                     listaUsers = listaUsers + "@" + clients.get(i).getUsername() + "\n";
-                }else{
-                    listaUsers = listaUsers + "@" + clients.get(i).getUsername() + " (TU) " +"\n";
+                } else {
+                    listaUsers = listaUsers + "@" + clients.get(i).getUsername() + " (TU) " + "\n";
                 }
             }
         }
@@ -215,9 +207,9 @@ public class ClientHandler extends Thread {
         lista = objectMapper.writeValueAsString(list);
         clients.get(index).pr.println(lista);
     }
-    
+
     private void sendToPrivate(String msg, String receiver, String sender) {
-        
+
         int pos = researchUser(receiver);
         if (pos == -1) {
             Message msgerror = new Message("Utente non trovato", "Server");
@@ -225,17 +217,17 @@ public class ClientHandler extends Thread {
             try {
                 msgE = objectMapper.writeValueAsString(msgerror);
                 clients.get(researchUser(sender)).pr.println(msgE);
-                
+
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(ClientHandler.class
                         .getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         } else {
             clients.get(pos).pr.println(msg);
         }
     }
-    
+
     private int researchUser(String user) {
         for (int i = 0; i < clients.size(); i++) {
             if (clients.get(i).getUsername().equals(user)) {
@@ -244,7 +236,7 @@ public class ClientHandler extends Thread {
         }
         return -1;
     }
-    
+
     private void aggiornaConnessione() throws IOException {
         for (int i = 0; i < clients.size(); i++) {
             //System.out.println(clients.get(i).getUsername());

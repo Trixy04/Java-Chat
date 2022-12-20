@@ -1,5 +1,7 @@
 package it.teriaca.chat_gui_client;
 
+import java.awt.Color;
+
 public class Item_Left extends javax.swing.JLayeredPane {
 
     public Item_Left(String text, String ora) {
