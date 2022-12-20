@@ -3,8 +3,11 @@
 - <a href="#Descrizione">Descrizione</a>
 - <a href="#Strumenti">Strumenti utilizzati</a>
 - <a href="#TipM">Tipologia messaggi</a>
-- <a href="#Seq">Diagrammi di sequenza</a>
-  - <a href="#conn">Diagramma di connessione</a>
+ - [Diagrammi di sequenza](#diagrammi-di-sequenza)
+    - [Diagramma della connessione](#diagramma-della-connessione)
+    - [Diagramma della disconnessione](#diagramma-della-disconnessione)
+    - [Diagramma del messaggio pubblico](#diagramma-del-messaggio-pubblico)
+    - [Diagramma del messaggio privato](#diagramma-del-messaggio-privato)
 - <a href="#Lic">Licenza</a>
 
 ## <a name="Descrizione">Descrizione</a>
@@ -44,7 +47,7 @@ Esempio -> `@user`
    </tr>
 </table>
 
-## <a name="Seq">Diagramma di sequenza</a>
+## Diagramma di connessione
 ### <a name="conn">Diagramma di connessione</a>
 ```mermaid
 sequenceDiagram
