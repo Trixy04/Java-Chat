@@ -19,7 +19,7 @@ Progettazione e implementazione di una chat sviluppata in Java, basata sull'arch
 ## <a name="TipM">Tipologia messaggi</a>
 Tutti i messaggi scambiati saranno serializzati in <a href="https://www.json.org/json-it.html">JSON</a>.<br><br>
 Ogni comando come riportato in tabella sottostante, è separata dal testo da `" "`.<br><br>
-Esempio -> `MSB:`
+Esempio -> `@user`
 
 <table>
   <tr>
@@ -27,18 +27,20 @@ Esempio -> `MSB:`
      <td>Funzionalità</td>
    </tr>
    <tr>
-   <td>MSB:</td>
+   <td>@all & senza intestazione</td>
      <td>Permette di inviare un messaggio in broadcast</td>
    </tr>
       <tr>
-   <td>NOME_UTENTE:</td>
-     <td>Specificando inizialmente il nome dell'utente permette di inviare un messaggio privatamente</td>
+   <td>@user</td>
+     <td>Specificando dopo la @ il nome dell'utente permette di inviare un messaggio privatamente</td>
    </tr>
-      <td>CMD:</td>
-     <td>Permette di ricevere in risposta la lista di tutti i comandi accettati dal server</td>
-   </tr>
-      <td>ULIST:</td>
+  <tr>
+      <td>/list</td>
      <td>Permette di ricevere in risposta la lista di tutti gli utenti connessi</td>
+  </tr>
+  <tr>
+  <td>/close</td>
+     <td>Permette di chiudere la connessione col server ed uscire dalla chat</td>
    </tr>
 </table>
 
