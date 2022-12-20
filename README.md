@@ -12,7 +12,7 @@
  - [Licenza](#Licenza)
 
 ## <a name="Descrizione">Descrizione</a>
-Progettazione e implementazione di una chat sviluppata in Java, basata sull'architettura Client - Server, basandosi sul protocollo TCP. Il Client e il server comunicano in modalità full duplex. La chat supporta l'invio di messaggi in broadcast sia messaggi "privati".
+Progettazione e implementazione di una chat sviluppata in Java, basata sull'architettura Client - Server, basandosi sul protocollo TCP. Il Client e il server comunicano in modalità full duplex. La chat supporta l'invio di messaggi in broadcast sia messaggi "privati". La chat presenta una guida pratica all'utilizzo per mostrare all'utente tutte le funzionalità in modo chiaro e coeso.
 
 ## <a name="Strumenti">Strumenti utilizzati</a>
 - Java 18 -> Maven
