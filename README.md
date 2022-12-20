@@ -5,17 +5,19 @@
 - <a href="#TipM">Tipologia messaggi</a>
 - <a href="#Seq">Diagrammi di sequenza</a>
   - <a href="#conn">Diagramma di connessione</a>
+- - <a href="#Lic">Licenza</a>
 
 ## <a name="Descrizione">Descrizione</a>
 Progettazione e implementazione di una chat sviluppata in Java, basata sull'architettura Client - Server, basandosi sul protocollo TCP. Il Client e il server comunicano in modalità full duplex. La chat supporta l'invio di messaggi in broadcast sia messaggi "privati".
 
 ## <a name="Strumenti">Strumenti utilizzati</a>
 - Java 18 -> Maven
-- XML 
+- JSON 
 - Visual Studio Code
+- NetBeans
 
 ## <a name="TipM">Tipologia messaggi</a>
-Tutti i messaggi scambiati saranno serializzati in <a href="https://it.wikipedia.org/wiki/XML](https://www.json.org/json-it.html">JSON</a>.<br><br>
+Tutti i messaggi scambiati saranno serializzati in <a href="https://www.json.org/json-it.html">JSON</a>.<br><br>
 Ogni comando come riportato in tabella sottostante, è separata dal testo da `:`.<br><br>
 Esempio -> `MSB:`
 
