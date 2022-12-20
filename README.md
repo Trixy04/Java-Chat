@@ -57,6 +57,41 @@ sequenceDiagram
         Server ->> Client già connessi: inoltro messaggio nuovo utente
 ```
 ---
+### Diagramma della disconnessione
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Server
+    participant Partecipanti
+    Client->>Server: avvisa della disconnessione
+    Server->>Client: disconnette
+        Server ->> Partecipanti: notifica del client disconesso
+```
+---
+### Diagramma del messaggio pubblico
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Server
+    participant Partecipanti
+    Client->>Server: invia il messaggio
+        Server->>Server: controlla la validità
+    Server ->> Partecipanti: inoltra il messaggio
+    Server->>Client: messaggio inviato
+```
+---
+### Diagramma del messaggio privato
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Server
+    participant Target
+    Client->>Server: invia il messaggio
+        Server->>Server: controlla la validità
+        Server->>Server: cerca il target
+    Server ->> Target: inoltra il messaggio
+    Server->>Client: messaggio inviato
+```
 
 ## <a name="Lic">Licenza</a>
 Questo software è sotto licenza MIT, consultabile al seguente [link](https://mit-license.org/)
