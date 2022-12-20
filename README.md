@@ -57,5 +57,5 @@ sequenceDiagram
 ---
 
 ## <a name="Lic">Licenza</a>
-Questo software è sotto licenza MIT, consultabile al seguente link <a herf="https://mit-license.org/">Clicca qui</a>
+Questo software è sotto licenza MIT, consultabile al seguente [link](https://mit-license.org/)
 
