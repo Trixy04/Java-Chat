@@ -3,6 +3,7 @@
 - <a href="#Descrizione">Descrizione</a>
 - <a href="#Strumenti">Strumenti utilizzati</a>
 - <a href="#TipM">Tipologia messaggi</a>
+- [Struttura messaggio](#Struttura-messaggio)
  - [Diagrammi di sequenza](#diagrammi-di-sequenza)
     - [Diagramma della connessione](#diagramma-di-connessione)
     - [Diagramma della disconnessione](#diagramma-di-disconnessione)
@@ -46,6 +47,18 @@ Esempio -> `@user`
      <td>Permette di chiudere la connessione col server ed uscire dalla chat</td>
    </tr>
 </table>
+
+## Struttura messaggio
+La seguente struttura rappresenta i messaggi che vengono scambiati
+```json
+{
+ "String body" : "testo messaggio",
+ "String sender" : "username mittente",
+ "String receiver" : "username destinatario",
+ "String tag" : "tag utilizzato dal server",
+ "String ora" : "orario di invio"
+}
+```
 
 ## Diagramma di sequenza
 
