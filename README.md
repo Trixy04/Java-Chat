@@ -15,7 +15,7 @@ Progettazione e implementazione di una chat sviluppata in Java, basata sull'arch
 - Visual Studio Code
 
 ## <a name="TipM">Tipologia messaggi</a>
-Tutti i messaggi scambiati saranno serializzati in <a href="https://it.wikipedia.org/wiki/XML">XML</a>.<br><br>
+Tutti i messaggi scambiati saranno serializzati in <a href="https://it.wikipedia.org/wiki/XML](https://www.json.org/json-it.html">JSON</a>.<br><br>
 Ogni comando come riportato in tabella sottostante, è separata dal testo da `:`.<br><br>
 Esempio -> `MSB:`
 
