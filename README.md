@@ -4,10 +4,10 @@
 - <a href="#Strumenti">Strumenti utilizzati</a>
 - <a href="#TipM">Tipologia messaggi</a>
  - [Diagrammi di sequenza](#diagrammi-di-sequenza)
-    - [Diagramma della connessione](#diagramma-della-connessione)
-    - [Diagramma della disconnessione](#diagramma-della-disconnessione)
-    - [Diagramma del messaggio pubblico](#diagramma-del-messaggio-pubblico)
-    - [Diagramma del messaggio privato](#diagramma-del-messaggio-privato)
+    - [Diagramma della connessione](#diagramma-di-connessione)
+    - [Diagramma della disconnessione](#diagramma-di-disconnessione)
+    - [Diagramma del messaggio pubblico](#diagramma-del-messaggio-broadcast)
+    - [Diagramma del messaggio privato](#diagramma-del-messaggio-private)
 - <a href="#Lic">Licenza</a>
 
 ## <a name="Descrizione">Descrizione</a>
@@ -61,7 +61,7 @@ sequenceDiagram
         Server ->> Client già connessi: inoltro messaggio nuovo utente
 ```
 ---
-### Diagramma della disconnessione
+### Diagramma di disconnessione
 ```mermaid
 sequenceDiagram
     participant Client
@@ -72,7 +72,7 @@ sequenceDiagram
         Server ->> Partecipanti: notifica del client disconesso
 ```
 ---
-### Diagramma del messaggio pubblico
+### Diagramma del messaggio private
 ```mermaid
 sequenceDiagram
     participant Client
@@ -84,7 +84,7 @@ sequenceDiagram
     Server->>Client: messaggio inviato
 ```
 ---
-### Diagramma del messaggio privato
+### Diagramma del messaggio broadcast
 ```mermaid
 sequenceDiagram
     participant Client
