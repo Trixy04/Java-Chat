@@ -5,7 +5,7 @@
 - <a href="#TipM">Tipologia messaggi</a>
 - <a href="#Seq">Diagrammi di sequenza</a>
   - <a href="#conn">Diagramma di connessione</a>
-- - <a href="#Lic">Licenza</a>
+- <a href="#Lic">Licenza</a>
 
 ## <a name="Descrizione">Descrizione</a>
 Progettazione e implementazione di una chat sviluppata in Java, basata sull'architettura Client - Server, basandosi sul protocollo TCP. Il Client e il server comunicano in modalità full duplex. La chat supporta l'invio di messaggi in broadcast sia messaggi "privati".
@@ -57,25 +57,5 @@ sequenceDiagram
 ---
 
 ## <a name="Lic">Licenza</a>
-Licenza MIT
-
-Copyright (c) [2022] [Teriaca Mattia]
-
-L'autorizzazione è concessa, a titolo gratuito, a chiunque ne ottenga una copia
-di questo software e dei file di documentazione associati (il "Software"), da trattare
-nel Software senza limitazioni, inclusi, senza limitazioni, i diritti
-utilizzare, copiare, modificare, unire, pubblicare, distribuire, concedere in sublicenza e/o vendere
-copie del Software e per consentire alle persone a cui il Software è
-fornito a tal fine, alle seguenti condizioni:
-
-Il suddetto avviso di copyright e questo avviso di autorizzazione devono essere inclusi in tutti
-copie o parti sostanziali del Software.
-
-IL SOFTWARE VIENE FORNITO "COSÌ COM'È", SENZA GARANZIE DI ALCUN TIPO, ESPRESSE O
-IMPLICITE, COMPRESE MA NON LIMITATE A GARANZIE DI COMMERCIABILITÀ,
-IDONEITÀ PER UNO SCOPO PARTICOLARE E NON VIOLAZIONE. IN NESSUN CASO IL
-AUTORI O TITOLARI DEL COPYRIGHT SARANNO RESPONSABILI PER QUALSIASI RECLAMO, DANNO O ALTRO
-RESPONSABILITÀ, SIA IN AZIONE CONTRATTUALE, ILLECITA O ALTRO, DERIVANTE DA,
-FUORI O IN RELAZIONE AL SOFTWARE O ALL'UTILIZZO O AD ALTRI RAPPORTI NEL
-SOFTWARE.
+Questo software è sotto licenza MIT, consultabile al seguente link <a herf="https://mit-license.org/">Clicca qui</a>
 
