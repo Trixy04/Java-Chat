@@ -47,8 +47,9 @@ Esempio -> `@user`
    </tr>
 </table>
 
-## Diagramma di connessione
-### <a name="conn">Diagramma di connessione</a>
+## Diagramma di sequenza
+
+### Diagramma di connessione
 ```mermaid
 sequenceDiagram
     participant Client
