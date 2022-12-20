@@ -66,10 +66,7 @@ sequenceDiagram
 sequenceDiagram
     participant Client
     participant Server
-    participant Partecipanti
-    Client->>Server: avvisa della disconnessione
     Server->>Client: disconnette
-        Server ->> Partecipanti: notifica del client disconesso
 ```
 ---
 ### Diagramma del messaggio private
@@ -92,7 +89,6 @@ sequenceDiagram
     participant Target
     Client->>Server: invia il messaggio
         Server->>Server: controlla la validità
-        Server->>Server: cerca il target
     Server ->> Target: inoltra il messaggio
     Server->>Client: messaggio inviato
 ```
