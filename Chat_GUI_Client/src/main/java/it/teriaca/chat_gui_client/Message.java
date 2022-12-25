@@ -29,6 +29,10 @@ public class Message {
         this.sender = sender;
     }
 
+    public Message(String string) {
+        this.tag = string;
+    }
+
     public String getOra() {
         return ora;
     }
@@ -36,7 +40,7 @@ public class Message {
     public Message(String body, String username) {
         this.body = body;
         this.sender = username;
-        this.tag = "!";
+        this.tag = "!-!";
         this.ora = null;
     }
 

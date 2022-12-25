@@ -96,10 +96,16 @@ public class ClientHandler extends Thread {
         try {
             //contatore++;
             Message message;
-            
+
             String name = br.readLine();
             message = objectMapper.readValue(name, Message.class);
             this.username = message.getSender();
+
+            for (int i = 0; i < clients.size(); i++) {
+                Message userConnect = new Message("Utente Connesso", clients.get(i).getUsername());
+                String uC = objectMapper.writeValueAsString(userConnect);
+                sendToAll(uC, "server");
+            }
 
             for (;;) {
 
@@ -112,6 +118,7 @@ public class ClientHandler extends Thread {
                 message.setTag(String.valueOf(message.getBody().charAt(0)));
 
                 switch (message.getTag()) {
+
                     case "@" -> {
                         String receiver = message.getBody().split(" ")[0];
                         receiver = receiver.replace("@", "");
@@ -145,7 +152,14 @@ public class ClientHandler extends Thread {
                                 listUsers(message.getSender());
 
                             case "close" -> {
-                                Message msgerror = new Message("close", "Server");
+
+                                for (int i = 0; i < clients.size(); i++) {
+                                    Message userConnect = new Message("Utente Disconesso", this.getUsername());
+                                    String uC = objectMapper.writeValueAsString(userConnect);
+                                    sendToAll(uC, "server");
+                                }
+
+                                Message msgerror = new Message("close", "Server", username);
                                 String msgE;
                                 msgE = objectMapper.writeValueAsString(msgerror);
                                 clients.get(researchUser(message.getSender())).pr.println(msgE);
