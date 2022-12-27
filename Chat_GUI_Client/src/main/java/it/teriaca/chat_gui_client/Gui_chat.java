@@ -27,6 +27,7 @@ import net.miginfocom.swing.MigLayout;
 import java.applet.Applet;
 import java.applet.AudioClip;
 import static java.awt.Color.GREEN;
+import static java.awt.Color.WHITE;
 import static java.awt.Color.YELLOW;
 import static java.awt.Color.white;
 import java.io.File;
@@ -71,7 +72,6 @@ public class Gui_chat extends javax.swing.JFrame {
         this.in = new BufferedReader(new InputStreamReader(s.getInputStream()));
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         avvioUser("Gruppo - Broadcast", "...");
-
     }
 
     private void avvioUser(String nome, String init) {
@@ -81,6 +81,18 @@ public class Gui_chat extends javax.swing.JFrame {
         this.jPanel3.repaint();
         this.jPanel3.validate();
         //invioRichiestaUtente();
+    }
+
+    private void lightMessage(String name) throws InterruptedException {
+        for (int i = 0; i < uCC.size(); i++) {
+            if (uCC.get(i).getName().equals(name)) {
+                uCC.get(i).setBackground(GREEN);
+
+                uCC.get(i).setBackground(WHITE);
+
+            }
+
+        }
     }
 
     private void removeUser(String nome) {
@@ -327,6 +339,23 @@ public class Gui_chat extends javax.swing.JFrame {
         public ServerConnection(Socket s) throws IOException {
             this.s = s;
             this.in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            System.out.println("SS --> " + Rese(jLabel2.getText()));
+            if (Rese(jLabel2.getText()) != -1) {
+                arrayUtenti.remove(Research(jLabel2.getText()));
+                JOptionPane.showMessageDialog(this, "Nome utente già in uso");
+                Message chiudo = new Message("?chiudo", jLabel2.getText());
+                String json = objectMapper.writeValueAsString(chiudo);
+                pr.println(json);
+                //wait(1000);
+                this.s.close();
+            }else{
+                addThis();
+            }
+        }
+
+        private void addThis() {
+            arrayUtenti.add(jLabel2.getText());
+            System.out.println("aggiunto");
         }
 
         private void formWindowClosing(java.awt.event.WindowEvent evt) throws IOException, InterruptedException {
@@ -336,6 +365,15 @@ public class Gui_chat extends javax.swing.JFrame {
             pr.println(json);
             wait(1000);
             this.s.close();
+        }
+        
+        private int Rese(String x) {
+            for (int i = 0; i < arrayUtenti.size(); i++) {
+                if (arrayUtenti.get(i).equals(x)) {
+                    return i;
+                }
+            }
+            return -1;
         }
 
         private int Research(String x) {
@@ -364,8 +402,12 @@ public class Gui_chat extends javax.swing.JFrame {
                         }
 
                     } else if ((message.getTag().equals("!!!")) && message.getBody().equals("Utente Disconesso")) {
+                        int posA = Research(message.getSender());
+
+                        System.out.println(message.getSender());
+
                         if (!message.getSender().equals(jLabel2.getText())) {
-                            arrayUtenti.remove(Research(message.getSender()));
+                            arrayUtenti.remove(posA);
                         }
                         removeUser(message.getSender());
 
@@ -376,6 +418,7 @@ public class Gui_chat extends javax.swing.JFrame {
                         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
                         String orario = String.valueOf(dtf.format(LocalDateTime.now()));
                         Item_Left item = new Item_Left(message.getSender() + " (Private Message) " + "\n" + message.getBody(), orario);
+                        lightMessage(message.getSender());
                         jPanel2.add(item, "wrap, w 80%");
                         jPanel2.repaint();
                         jPanel2.revalidate();
@@ -384,12 +427,15 @@ public class Gui_chat extends javax.swing.JFrame {
                         String orario = String.valueOf(dtf.format(LocalDateTime.now()));
                         Item_Left item = new Item_Left(message.getSender() + "\n" + message.getBody(), orario);
                         jPanel2.add(item, "wrap, w 80%");
+                        lightMessage("Gruppo - Broadcast");
                         jPanel2.repaint();
                         jPanel2.revalidate();
                     }
 
                 }
             } catch (IOException e) {
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Gui_chat.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

@@ -104,7 +104,7 @@ public class ClientHandler extends Thread {
             for (int i = 0; i < clients.size(); i++) {
                 Message userConnect = new Message("Utente Connesso", clients.get(i).getUsername());
                 String uC = objectMapper.writeValueAsString(userConnect);
-                sendToAll(uC, "server");
+                sendToAll(uC, "server", "");
             }
 
             for (;;) {
@@ -153,11 +153,12 @@ public class ClientHandler extends Thread {
 
                             case "close" -> {
 
-                                for (int i = 0; i < clients.size(); i++) {
+                                
                                     Message userConnect = new Message("Utente Disconesso", this.getUsername());
+                                    System.out.println(getUsername());
                                     String uC = objectMapper.writeValueAsString(userConnect);
-                                    sendToAll(uC, "server");
-                                }
+                                    sendToAll(uC, "server", "u");
+                                
 
                                 Message msgerror = new Message("close", "Server", username);
                                 String msgE;
@@ -178,12 +179,11 @@ public class ClientHandler extends Thread {
                     }
 
                     default ->
-                        sendToAll(json, message.getSender());
+                        sendToAll(json, message.getSender(), "");
                 }
 
             }
         } catch (IOException e) {
-
         }
 
     }
@@ -191,12 +191,18 @@ public class ClientHandler extends Thread {
     /**
      * @param msg
      */
-    private void sendToAll(String msg, String sender) {
+    private void sendToAll(String msg, String sender, String urg) {
+        if (urg.equals("")) {
+            for (int i = 0; i < clients.size(); i++) {
 
-        for (int i = 0; i < clients.size(); i++) {
-            if (clients.get(i).getUsername().equals(sender)) {
-                //client che invia MSB
-            } else {
+                if (clients.get(i).getUsername().equals(sender)) {
+                    //client che invia MSB
+                } else {
+                    clients.get(i).pr.println(msg);
+                }
+            }
+        }else{
+            for (int i = 0; i < clients.size(); i++) {
                 clients.get(i).pr.println(msg);
             }
         }
