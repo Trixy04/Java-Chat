@@ -31,7 +31,9 @@ import static java.awt.Color.WHITE;
 import static java.awt.Color.YELLOW;
 import static java.awt.Color.white;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.sound.sampled.*;
@@ -96,7 +98,7 @@ public class Gui_chat extends javax.swing.JFrame {
     }
 
     private void removeUser(String nome) {
-        System.out.println("EMTRATP");
+        //System.out.println("EMTRATP");
 
         for (int i = 0; i < uCC.size(); i++) {
             if (uCC.get(i).getName().equals(nome)) {
@@ -271,7 +273,7 @@ public class Gui_chat extends javax.swing.JFrame {
 
         if (!jTextField1.getText().equals("")) {
             if (jTextField1.getText().equals("/close")) {
-                System.out.println("CHIUDO");
+                //System.out.println("CHIUDO");
             }
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
@@ -335,27 +337,20 @@ public class Gui_chat extends javax.swing.JFrame {
         ObjectMapper objectMapper = new ObjectMapper();
         private Message message = new Message();
         ArrayList<String> arrayUtenti = new ArrayList();
+        private String use;
 
-        public ServerConnection(Socket s) throws IOException {
+        public ServerConnection(Socket s, String user) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+
             this.s = s;
             this.in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            System.out.println("SS --> " + Rese(jLabel2.getText()));
-            if (Rese(jLabel2.getText()) != -1) {
-                arrayUtenti.remove(Research(jLabel2.getText()));
-                JOptionPane.showMessageDialog(this, "Nome utente già in uso");
-                Message chiudo = new Message("?chiudo", jLabel2.getText());
-                String json = objectMapper.writeValueAsString(chiudo);
-                pr.println(json);
-                //wait(1000);
-                this.s.close();
-            }else{
-                addThis();
-            }
+            this.use = user;
+            addThis(user);
+
         }
 
-        private void addThis() {
-            arrayUtenti.add(jLabel2.getText());
-            System.out.println("aggiunto");
+        private void addThis(String user) {
+            arrayUtenti.add(user);
+            //System.out.println("aggiunto");
         }
 
         private void formWindowClosing(java.awt.event.WindowEvent evt) throws IOException, InterruptedException {
@@ -366,7 +361,7 @@ public class Gui_chat extends javax.swing.JFrame {
             wait(1000);
             this.s.close();
         }
-        
+
         private int Rese(String x) {
             for (int i = 0; i < arrayUtenti.size(); i++) {
                 if (arrayUtenti.get(i).equals(x)) {
@@ -393,9 +388,9 @@ public class Gui_chat extends javax.swing.JFrame {
                     String serverResponse = in.readLine();
                     message = objectMapper.readValue(serverResponse, Message.class);
 
-                    System.out.println(message.getTag());
-
+                    //System.out.println(message.getTag());
                     if ((message.getTag().equals("!!!")) && message.getBody().equals("Utente Connesso")) {
+
                         if (Research(message.getSender()) == -1 && !jLabel2.getText().equals(message.getSender())) {
                             arrayUtenti.add(message.getSender());
                             avvioUser(message.getSender(), "");
@@ -404,8 +399,7 @@ public class Gui_chat extends javax.swing.JFrame {
                     } else if ((message.getTag().equals("!!!")) && message.getBody().equals("Utente Disconesso")) {
                         int posA = Research(message.getSender());
 
-                        System.out.println(message.getSender());
-
+                        //System.out.println(message.getSender());
                         if (!message.getSender().equals(jLabel2.getText())) {
                             arrayUtenti.remove(posA);
                         }
@@ -419,15 +413,18 @@ public class Gui_chat extends javax.swing.JFrame {
                         String orario = String.valueOf(dtf.format(LocalDateTime.now()));
                         Item_Left item = new Item_Left(message.getSender() + " (Private Message) " + "\n" + message.getBody(), orario);
                         lightMessage(message.getSender());
+
                         jPanel2.add(item, "wrap, w 80%");
                         jPanel2.repaint();
                         jPanel2.revalidate();
                     } else {
+
                         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
                         String orario = String.valueOf(dtf.format(LocalDateTime.now()));
                         Item_Left item = new Item_Left(message.getSender() + "\n" + message.getBody(), orario);
                         jPanel2.add(item, "wrap, w 80%");
                         lightMessage("Gruppo - Broadcast");
+
                         jPanel2.repaint();
                         jPanel2.revalidate();
                     }

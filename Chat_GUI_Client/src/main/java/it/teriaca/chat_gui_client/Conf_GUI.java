@@ -234,14 +234,9 @@ public class Conf_GUI extends javax.swing.JFrame {
         } else {
             try {
                 this.chat = new Client_Java(ipAddressServer, portNumberServer, user);
-            } catch (IOException ex) {
-                //Logger.getLogger(Conf_GUI.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this, "Ip Address o Port number non \n corretti, connessione rifiutata");
-                return;
-
+                
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Ip Address o Port number non \n corretti, connessione rifiutata");
-                return;
+                Logger.getLogger(Conf_GUI.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             this.setVisible(false);

@@ -153,12 +153,10 @@ public class ClientHandler extends Thread {
 
                             case "close" -> {
 
-                                
-                                    Message userConnect = new Message("Utente Disconesso", this.getUsername());
-                                    System.out.println(getUsername());
-                                    String uC = objectMapper.writeValueAsString(userConnect);
-                                    sendToAll(uC, "server", "u");
-                                
+                                Message userConnect = new Message("Utente Disconesso", this.getUsername());
+                                System.out.println(getUsername());
+                                String uC = objectMapper.writeValueAsString(userConnect);
+                                sendToAll(uC, "server", "u");
 
                                 Message msgerror = new Message("close", "Server", username);
                                 String msgE;
@@ -201,7 +199,7 @@ public class ClientHandler extends Thread {
                     clients.get(i).pr.println(msg);
                 }
             }
-        }else{
+        } else {
             for (int i = 0; i < clients.size(); i++) {
                 clients.get(i).pr.println(msg);
             }
