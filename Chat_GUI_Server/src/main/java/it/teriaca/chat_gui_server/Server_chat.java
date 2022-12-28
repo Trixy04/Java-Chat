@@ -40,22 +40,27 @@ public class Server_chat {
 
         System.out.println("Server in ascolto sulla porta 3000");
         //boolean running = true;
-        while (running) {
+        if (Research(name) == -1) {
+            while (running) {
 
-            Socket s = ss.accept();
-            this.contatore++;
+                Socket s = ss.accept();
+                this.contatore++;
 
-            InetSocketAddress socketAddress = (InetSocketAddress) s.getRemoteSocketAddress();
-            this.ipAddress = socketAddress.getAddress().getHostAddress();
+                InetSocketAddress socketAddress = (InetSocketAddress) s.getRemoteSocketAddress();
+                this.ipAddress = socketAddress.getAddress().getHostAddress();
 
-            DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM, yyyy 'alle' HH:mm:ss");
+                DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM, yyyy 'alle' HH:mm:ss");
 
-            String date = dateFormat.format(Calendar.getInstance().getTime());
+                String date = dateFormat.format(Calendar.getInstance().getTime());
 
-            ClientHandler client = new ClientHandler(s, contatore, name, date, ipAddress, ss, clients);
-            clients.add(client);
-            client.start();
+                ClientHandler client = new ClientHandler(s, contatore, name, date, ipAddress, ss, clients);
+                clients.add(client);
+                client.start();
+            }
+        }else{
+            //CONNESSIONE RIFIUTATA
         }
+
     }
 
     public String getIpAddress() {
@@ -74,6 +79,15 @@ public class Server_chat {
         }
         ss.close();
         System.exit(0);
+    }
+
+    public int Research(String user) {
+        for (int i = 0; i < clients.size(); i++) {
+            if (clients.get(i).getUsername().equals(user)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public int getPortNumber() {

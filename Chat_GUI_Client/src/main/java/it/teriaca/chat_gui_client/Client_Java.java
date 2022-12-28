@@ -28,9 +28,12 @@ public class Client_Java {
     public void connection(String ipAddress, int portNumber, String user) throws IOException, Exception {
 
         this.s = new Socket(ipAddress, portNumber);
+        if(!this.s.isConnected()){
+            System.exit(0);
+        }
         this.chat = new Gui_chat(ipAddress, portNumber, user, s);
         this.chat.setVisible(true);
-        Gui_chat.ServerConnection serverConnect = chat.new ServerConnection(s);
+        Gui_chat.ServerConnection serverConnect = chat.new ServerConnection(s, user);
 
         PrintWriter pr = new PrintWriter(s.getOutputStream(), true);
         BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));

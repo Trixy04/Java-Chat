@@ -27,9 +27,14 @@ import net.miginfocom.swing.MigLayout;
 import java.applet.Applet;
 import java.applet.AudioClip;
 import static java.awt.Color.GREEN;
+import static java.awt.Color.WHITE;
 import static java.awt.Color.YELLOW;
+import static java.awt.Color.white;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 import javax.sound.sampled.*;
 import javax.swing.JOptionPane;
@@ -47,6 +52,7 @@ public class Gui_chat extends javax.swing.JFrame {
     PrintWriter pr;
     static BufferedReader in;
     ServerConnection serverConn;
+    private ArrayList<User_conn> uCC = new ArrayList();
 
     /**
      * Creates new form Gui_chat
@@ -59,6 +65,7 @@ public class Gui_chat extends javax.swing.JFrame {
     public Gui_chat(String ip, int port, String username, Socket s) throws Exception {
         initComponents();
         jPanel2.setLayout(new MigLayout("fillx"));
+        jPanel3.setLayout(new MigLayout("fillx"));
         this.s = s;
         this.setTitle("JAVA CHAT - Area Client");
         this.jLabel2.setText(username);
@@ -66,6 +73,41 @@ public class Gui_chat extends javax.swing.JFrame {
         this.setResizable(false);
         this.in = new BufferedReader(new InputStreamReader(s.getInputStream()));
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        avvioUser("Gruppo - Broadcast", "...");
+    }
+
+    private void avvioUser(String nome, String init) {
+        User_conn user = new User_conn(nome, "...");
+        uCC.add(user);
+        this.jPanel3.add(user, "wrap, w 100%");
+        this.jPanel3.repaint();
+        this.jPanel3.validate();
+        //invioRichiestaUtente();
+    }
+
+    private void lightMessage(String name) throws InterruptedException {
+        for (int i = 0; i < uCC.size(); i++) {
+            if (uCC.get(i).getName().equals(name)) {
+                uCC.get(i).setBackground(GREEN);
+
+                uCC.get(i).setBackground(WHITE);
+
+            }
+
+        }
+    }
+
+    private void removeUser(String nome) {
+        //System.out.println("EMTRATP");
+
+        for (int i = 0; i < uCC.size(); i++) {
+            if (uCC.get(i).getName().equals(nome)) {
+                jPanel3.remove(uCC.get(i));
+                this.jPanel3.repaint();
+                this.jPanel3.validate();
+                uCC.remove(i);
+            }
+        }
 
     }
 
@@ -73,6 +115,7 @@ public class Gui_chat extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -81,6 +124,19 @@ public class Gui_chat extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -127,7 +183,7 @@ public class Gui_chat extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 528, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,38 +199,65 @@ public class Gui_chat extends javax.swing.JFrame {
             }
         });
 
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 303, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jLabel4.setText("Utenti Connessi");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jTextField1)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)))
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(101, 101, 101)
+                .addComponent(jLabel4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -190,7 +273,7 @@ public class Gui_chat extends javax.swing.JFrame {
 
         if (!jTextField1.getText().equals("")) {
             if (jTextField1.getText().equals("/close")) {
-                System.out.println("CHIUDO");
+                //System.out.println("CHIUDO");
             }
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
@@ -214,10 +297,12 @@ public class Gui_chat extends javax.swing.JFrame {
                 pr.println(json);
 
             } catch (JsonProcessingException ex) {
-                Logger.getLogger(Gui_chat.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Gui_chat.class
+                        .getName()).log(Level.SEVERE, null, ex);
 
             } catch (IOException ex) {
-                Logger.getLogger(Gui_chat.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Gui_chat.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
         // TODO add your handling code here:
@@ -233,11 +318,14 @@ public class Gui_chat extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
@@ -248,10 +336,21 @@ public class Gui_chat extends javax.swing.JFrame {
         BufferedReader in;
         ObjectMapper objectMapper = new ObjectMapper();
         private Message message = new Message();
+        ArrayList<String> arrayUtenti = new ArrayList();
+        private String use;
 
-        public ServerConnection(Socket s) throws IOException {
+        public ServerConnection(Socket s, String user) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+
             this.s = s;
             this.in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            this.use = user;
+            addThis(user);
+
+        }
+
+        private void addThis(String user) {
+            arrayUtenti.add(user);
+            //System.out.println("aggiunto");
         }
 
         private void formWindowClosing(java.awt.event.WindowEvent evt) throws IOException, InterruptedException {
@@ -263,36 +362,77 @@ public class Gui_chat extends javax.swing.JFrame {
             this.s.close();
         }
 
+        private int Rese(String x) {
+            for (int i = 0; i < arrayUtenti.size(); i++) {
+                if (arrayUtenti.get(i).equals(x)) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        private int Research(String x) {
+            for (int i = 0; i < arrayUtenti.size(); i++) {
+                if (arrayUtenti.get(i).equals(message.getSender())) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
         @Override
         public void run() {
+
             try {
                 while (true) {
                     String serverResponse = in.readLine();
                     message = objectMapper.readValue(serverResponse, Message.class);
-                    
-                    System.out.println(message.getTag());
-                    
-                    if (message.getBody().equals("close") && message.getSender().equals("Server")) {
+
+                    //System.out.println(message.getTag());
+                    if ((message.getTag().equals("!!!")) && message.getBody().equals("Utente Connesso")) {
+
+                        if (Research(message.getSender()) == -1 && !jLabel2.getText().equals(message.getSender())) {
+                            arrayUtenti.add(message.getSender());
+                            avvioUser(message.getSender(), "");
+                        }
+
+                    } else if ((message.getTag().equals("!!!")) && message.getBody().equals("Utente Disconesso")) {
+                        int posA = Research(message.getSender());
+
+                        //System.out.println(message.getSender());
+                        if (!message.getSender().equals(jLabel2.getText())) {
+                            arrayUtenti.remove(posA);
+                        }
+                        removeUser(message.getSender());
+
+                    } else if (message.getBody().equals("close") && message.getSender().equals("Server")) {
                         this.s.close();
                         System.exit(0);
                     } else if (message.getTag().equals("@")) {
                         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
                         String orario = String.valueOf(dtf.format(LocalDateTime.now()));
                         Item_Left item = new Item_Left(message.getSender() + " (Private Message) " + "\n" + message.getBody(), orario);
+                        lightMessage(message.getSender());
+
                         jPanel2.add(item, "wrap, w 80%");
                         jPanel2.repaint();
                         jPanel2.revalidate();
                     } else {
+
                         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
                         String orario = String.valueOf(dtf.format(LocalDateTime.now()));
                         Item_Left item = new Item_Left(message.getSender() + "\n" + message.getBody(), orario);
                         jPanel2.add(item, "wrap, w 80%");
+                        lightMessage("Gruppo - Broadcast");
+
                         jPanel2.repaint();
                         jPanel2.revalidate();
                     }
 
                 }
             } catch (IOException e) {
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Gui_chat.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

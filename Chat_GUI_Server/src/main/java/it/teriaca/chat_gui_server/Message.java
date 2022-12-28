@@ -36,8 +36,15 @@ public class Message {
     public Message(String body, String username) {
         this.body = body;
         this.sender = username;
-        this.tag = "!";
+        this.tag = "!!!";
         this.ora = null;
+    }
+    
+    public Message(String body, String sender, String reciver){
+        this.tag = "!!!";
+        this.body = body;
+        this.sender = sender;
+        this.receiver = reciver;
     }
 
     public String getBody() {

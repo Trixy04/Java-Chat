@@ -96,10 +96,16 @@ public class ClientHandler extends Thread {
         try {
             //contatore++;
             Message message;
-            
+
             String name = br.readLine();
             message = objectMapper.readValue(name, Message.class);
             this.username = message.getSender();
+
+            for (int i = 0; i < clients.size(); i++) {
+                Message userConnect = new Message("Utente Connesso", clients.get(i).getUsername());
+                String uC = objectMapper.writeValueAsString(userConnect);
+                sendToAll(uC, "server", "");
+            }
 
             for (;;) {
 
@@ -112,6 +118,7 @@ public class ClientHandler extends Thread {
                 message.setTag(String.valueOf(message.getBody().charAt(0)));
 
                 switch (message.getTag()) {
+
                     case "@" -> {
                         String receiver = message.getBody().split(" ")[0];
                         receiver = receiver.replace("@", "");
@@ -145,7 +152,13 @@ public class ClientHandler extends Thread {
                                 listUsers(message.getSender());
 
                             case "close" -> {
-                                Message msgerror = new Message("close", "Server");
+
+                                Message userConnect = new Message("Utente Disconesso", this.getUsername());
+                                System.out.println(getUsername());
+                                String uC = objectMapper.writeValueAsString(userConnect);
+                                sendToAll(uC, "server", "u");
+
+                                Message msgerror = new Message("close", "Server", username);
                                 String msgE;
                                 msgE = objectMapper.writeValueAsString(msgerror);
                                 clients.get(researchUser(message.getSender())).pr.println(msgE);
@@ -164,12 +177,11 @@ public class ClientHandler extends Thread {
                     }
 
                     default ->
-                        sendToAll(json, message.getSender());
+                        sendToAll(json, message.getSender(), "");
                 }
 
             }
         } catch (IOException e) {
-
         }
 
     }
@@ -177,12 +189,18 @@ public class ClientHandler extends Thread {
     /**
      * @param msg
      */
-    private void sendToAll(String msg, String sender) {
+    private void sendToAll(String msg, String sender, String urg) {
+        if (urg.equals("")) {
+            for (int i = 0; i < clients.size(); i++) {
 
-        for (int i = 0; i < clients.size(); i++) {
-            if (clients.get(i).getUsername().equals(sender)) {
-                //client che invia MSB
-            } else {
+                if (clients.get(i).getUsername().equals(sender)) {
+                    //client che invia MSB
+                } else {
+                    clients.get(i).pr.println(msg);
+                }
+            }
+        } else {
+            for (int i = 0; i < clients.size(); i++) {
                 clients.get(i).pr.println(msg);
             }
         }
