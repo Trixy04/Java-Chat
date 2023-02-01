@@ -36,7 +36,7 @@
                 <archive>
                 <manifest>
                     <mainClass>
-                        it.teriaca.chat_gui_server
+                        it.teriaca.chat_gui_server.Chat_GUI_Server
                     </mainClass>
                 </manifest>
                 </archive>
